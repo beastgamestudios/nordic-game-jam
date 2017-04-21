@@ -5,10 +5,12 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class drawPointsInScene : MonoBehaviour {
 
+	private Transform[] wayPointObjects;
 	private Vector3[] wayPoints;
 
 	void OnDrawGizmos() {
-		wayPoints = getWayPointPositions();
+		wayPointObjects = getWayPointObjects();
+		wayPoints = getWayPointPositions(wayPointObjects);
 		//draw points of key nodes on way point
 		for (int i = 0; i < wayPoints.Length; i++) {
 			Gizmos.DrawIcon(wayPoints[i], "wayPointIcon.png", true);
@@ -21,11 +23,15 @@ public class drawPointsInScene : MonoBehaviour {
 		}
 	}
 	
-	public Vector3[] getWayPointPositions() {
+	public Transform[] getWayPointObjects() {
 		Transform[] wayPointObjects = GetComponentsInChildren<Transform>();
-		Vector3[] pathWayPoints = new Vector3[wayPointObjects.Length];
-		for (int i = 0; i < wayPointObjects.Length; i++) {
-			pathWayPoints[i] = wayPointObjects[i].transform.position;
+		return wayPointObjects;
+	}
+
+	public Vector3[] getWayPointPositions(Transform[] wayPointObj) {
+		Vector3[] pathWayPoints = new Vector3[wayPointObj.Length];
+		for (int i = 0; i < pathWayPoints.Length; i++) {
+			pathWayPoints[i] = wayPointObj[i].transform.position;
 		}
 		return pathWayPoints;
 	}

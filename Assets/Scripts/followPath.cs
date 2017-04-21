@@ -5,34 +5,44 @@ using UnityEngine;
 public class followPath : MonoBehaviour {
 	public float moveSpeed;
 	public GameObject path;
+	private Transform[] wayPointObjects;
 	private Vector3[] wayPoints;
 	private Vector3 currentDirection;
 	private int currentWayPoint = 0;
 	// Use this for initialization
 	void Start () {
-		getWayPointPositions();
-		getNextDirection(currentWayPoint);
+		wayPointObjects = path.GetComponentInChildren<drawPointsInScene>().getWayPointObjects();
+		wayPoints = path.GetComponentInChildren<drawPointsInScene>().getWayPointPositions(wayPointObjects);
+		setStartPosition();
+		getNextDirection(currentWayPoint + 1);
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		transform.position += currentDirection*moveSpeed*Time.deltaTime;
-		if (transform.position.x > wayPoints[currentWayPoint].x) {
-			currentWayPoint += 1;
-			getNextDirection(currentWayPoint);
+	}
+
+	void OnTriggerStay2D(Collider2D other) {
+		if (other == wayPointObjects[currentWayPoint].GetComponent<Collider2D>()) {
+			Debug.Log("on waypoint");
+			if (other.bounds.Contains(transform.position)) {
+				getNextDirection(currentWayPoint + 1);
+			}
 		}
 	}
 
-	void getWayPointPositions() {
-		Transform[] wayPointObjects = path.GetComponentsInChildren<Transform>();
-		wayPoints = new Vector3[wayPointObjects.Length];
-		int i = 0;
-		i = (i < wayPointObjects.Length) ? i++ : 0;
-		wayPoints[i] = wayPointObjects[i].transform.position;
+	void setStartPosition() {
+		transform.position = wayPoints[0];
 	}
 
 	void getNextDirection(int nextWayPoint) {
-		currentDirection = (wayPoints[nextWayPoint] - transform.position).normalized;
+		if (nextWayPoint < wayPoints.Length) {
+			currentDirection = (wayPoints[nextWayPoint] - transform.position).normalized;
+			currentWayPoint += 1;
+		} else {
+			currentDirection = (wayPoints[0] - wayPoints[nextWayPoint - 1]).normalized;
+			currentWayPoint = 0;
+		}
 	}
 }
