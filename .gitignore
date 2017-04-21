@@ -5,8 +5,10 @@ Temp/
 Obj/
 UnityGenerated/
 Library/
+Editor/
 .vscode/
 Assets/AssetStoreTools*
+Assets/Editor.meta
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
