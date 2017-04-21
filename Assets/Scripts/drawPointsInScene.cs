@@ -11,16 +11,9 @@ public class drawPointsInScene : MonoBehaviour {
 		wayPoints = getWayPointPositions();
 	}
 
-	void OnDrawGizmos() {
-		//draw points of key nodes on way point
-		for (int i = 0; i < wayPoints.Length; i++) {
-			Gizmos.DrawIcon(wayPoints[i], "wayPointIcon.png", true);
-			//draw lines between nodes
-			if (i == wayPoints.Length - 1) {
-				Gizmos.DrawLine(wayPoints[i], wayPoints[0]);
-			} else {
-				Gizmos.DrawLine(wayPoints[i], wayPoints[i + 1] );
-			}
+	void OnDrawGizmosSelected() {
+		foreach (Vector3 point in wayPoints) {
+			Gizmos.DrawSphere(point, 0.1f);
 		}
 	}
 	
