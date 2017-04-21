@@ -25,7 +25,6 @@ public class followPath : MonoBehaviour {
 
 	void OnTriggerStay2D(Collider2D other) {
 		if (other == wayPointObjects[currentWayPoint].GetComponent<Collider2D>()) {
-			Debug.Log("on waypoint");
 			if (other.bounds.Contains(transform.position)) {
 				getNextDirection(currentWayPoint + 1);
 			}
