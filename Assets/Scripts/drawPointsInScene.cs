@@ -6,12 +6,9 @@ using UnityEngine;
 public class drawPointsInScene : MonoBehaviour {
 
 	private Vector3[] wayPoints;
-	// Use this for initialization
-	void Start () {
-		wayPoints = getWayPointPositions();
-	}
 
 	void OnDrawGizmos() {
+		wayPoints = getWayPointPositions();
 		//draw points of key nodes on way point
 		for (int i = 0; i < wayPoints.Length; i++) {
 			Gizmos.DrawIcon(wayPoints[i], "wayPointIcon.png", true);
