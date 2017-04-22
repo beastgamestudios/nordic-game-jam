@@ -11,6 +11,8 @@ public class followPlayer : MonoBehaviour {
 	void Start () {
 		StartCoroutine(getDirection());
 		StartCoroutine(pause());
+		GetComponent<Rigidbody2D>().isKinematic = false;
+		gameObject.layer = LayerMask.NameToLayer( "Default" );
 	}
 	
 	// Update is called once per frame
@@ -31,4 +33,5 @@ public class followPlayer : MonoBehaviour {
 		yield return new WaitForSeconds(0.5f);
 		startMoving = true;
 	}
+
 }

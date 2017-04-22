@@ -23,7 +23,7 @@ public class PlayerHealth : MonoBehaviour {
 
 	public void ReduceHealth() {
 		playerHealth -= 1;
-        Debug.Log("Player Health:" +playerHealth);		
+        Debug.Log("Player Health:" + playerHealth);		
 	}
 
 	// void OnTriggerEnter2D(Collider2D collider)

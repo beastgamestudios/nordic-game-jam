@@ -23,7 +23,7 @@ public class PlayerControl : MonoBehaviour {
 	[HideInInspector]public string[] currentDirectionAnimations;
 
 	private enum directions{UP, RIGHT, DOWN, LEFT};
-	private enum states{IDLE, WALK, IDLE_HOLD, WALK_HOLD, ATTACK};
+	private enum states{IDLE, WALK, IDLE_HOLD, WALK_HOLD, ATTACK, HURT};
 
 	// Use this for initialization
 	void Start () {
@@ -178,6 +178,16 @@ void setObjectToPlayer() {
 	objectToBeLifted = objectColliderBoxPlayerIsIn.transform.parent;
 	objectToBeLifted.SetParent(transform);
 	objectToBeLifted.localPosition = new Vector2(0, objectHeightAbovePlayer);
+}
+
+void OnTriggerEnter2D(Collider2D other) {
+	if (other.gameObject.CompareTag("possessedObject")) {
+		control = false;
+		playerAnimator.Play(currentDirectionAnimations[(int)states.HURT]);
+		animationPlaying = currentDirectionAnimations[(int)states.HURT];
+		StartCoroutine(endAnimation());
+		//reduce player health
+	}
 }
 
 void OnTriggerStay2D(Collider2D other) {

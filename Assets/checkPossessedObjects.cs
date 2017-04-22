@@ -23,7 +23,8 @@ public class checkPossessedObjects : MonoBehaviour {
 		if (direction == transform.GetSiblingIndex()) {
 			if (ghostInCollider != null) {
 				deadGhostWalking = ghostInCollider;
-				StartCoroutine(killGhost());
+				deadGhostWalking.gameObject.SetActive(false);
+//				StartCoroutine(killGhost());
 			}
 		}
 	}

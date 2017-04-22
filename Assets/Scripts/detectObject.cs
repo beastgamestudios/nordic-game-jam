@@ -25,6 +25,7 @@ public class detectObject : MonoBehaviour {
 				other.gameObject.AddComponent<followPlayer>();
 				other.gameObject.GetComponent<followPlayer>().player = other.GetComponent<throwObject>().player;
 				other.GetComponent<throwObject>().enabled = false;
+				other.GetComponent<BoxCollider2D>().isTrigger = true;
 				//destroy colliders which activate lift mechanic
 				foreach (Transform child in other.transform) {
 					Destroy(child.gameObject);
