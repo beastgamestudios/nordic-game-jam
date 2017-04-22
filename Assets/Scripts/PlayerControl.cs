@@ -18,7 +18,7 @@ public class PlayerControl : MonoBehaviour {
 	private string[] currentDirectionAnimations;
 
 	private enum directions{UP, RIGHT, DOWN, LEFT};
-	private enum states{IDLE, WALK, IDLE_HOLD, WALK_HOLD};
+	private enum states{IDLE, WALK, IDLE_HOLD, WALK_HOLD, ATTACK};
 
 	// Use this for initialization
 	void Start () {
@@ -68,6 +68,10 @@ public class PlayerControl : MonoBehaviour {
 			} else {
 				checkForObject();
 			}
+		}
+
+		if (Input.GetKeyDown("b")) {
+			playerAnimator.Play(currentDirectionAnimations[(int)states.ATTACK]);
 		}
 		
 		if (Input.GetKey("tab")) {

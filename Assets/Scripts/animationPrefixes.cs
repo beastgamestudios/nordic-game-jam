@@ -5,10 +5,10 @@ using UnityEngine;
 public class animationPrefixes : MonoBehaviour {
 	[HideInInspector]public string[][] allAnimations;
 	
-	private string[] upNames = new string[] {"IdleUp", "walkUp", "IdleUpHold", "walkUpHold"};
-	private string[] rightNames = new string[] {"IdleRight", "walkRight", "IdleRightHold", "walkRightHold"};
-	private string[] downNames = new string[] {"IdleDown", "walkDown", "IdleDownHold", "walkDownHold"};
-	private string[] leftNames = new string[] {"IdleLeft", "walkLeft", "IdleLeftHold", "walkLeftHold"};
+	private string[] upNames = new string[] {"IdleUp", "walkUp", "IdleUpHold", "walkUpHold", "AttackUp"};
+	private string[] rightNames = new string[] {"IdleRight", "walkRight", "IdleRightHold", "walkRightHold", "AttackRight"};
+	private string[] downNames = new string[] {"IdleDown", "walkDown", "IdleDownHold", "walkDownHold", "AttackDown"};
+	private string[] leftNames = new string[] {"IdleLeft", "walkLeft", "IdleLeftHold", "walkLeftHold", "AttackLeft"};
 
 	// Use this for initialization
 	void Start () {
