@@ -13,6 +13,7 @@ public class PlayerControl : MonoBehaviour {
 	private bool inDarkRealm; 
 	private bool isHolding;
 	public GameObject DarkRealmObject;
+	public GameObject DarkRealmTimer;
 	public Slider timerSlider;
 	private Collider2D objectColliderBoxPlayerIsIn;
 	private Transform objectToBeLifted;
@@ -88,6 +89,10 @@ public class PlayerControl : MonoBehaviour {
 	if (inDarkRealm) {
 		DarkRealmCoolDown();
 	}
+	if (!inDarkRealm) {
+		DarkRealmRecharge();
+	}
+
 }
 
 void playIdleAnim() {
@@ -192,8 +197,6 @@ void throwObject() {
 	
 }
 
-
-
 void SwitchWorlds() {
 	// Code to change back and forth between Reality and Dark Realm
 	if (inDarkRealm == false) {
@@ -208,7 +211,15 @@ void SwitchWorlds() {
 }
 
 void DarkRealmCoolDown() {
-		Debug.Log(timerSlider.value);
 		timerSlider.value -= Time.deltaTime;
+		DarkRealmTimer.SetActive(true); //can see the timer in dark realm
 	}
+
+void DarkRealmRecharge() {
+		timerSlider.value += Time.deltaTime;
+		if (timerSlider.value >= timerSlider.maxValue) {
+			DarkRealmTimer.SetActive(false); //timer disappears when full
+		}
+}
+
 }
