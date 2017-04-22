@@ -243,6 +243,12 @@ void checkForGhosts() {
 void SwitchWorlds() {
 	// Code to change back and forth between Reality and Dark Realm
 	if (inDarkRealm == false) {
+		//trigger animation
+		control = false;
+		playerAnimator.Play("enterDarkRealm");
+		animationPlaying = "enterDarkRealm";
+		StartCoroutine(endAnimation());
+		
 		inDarkRealm = true;
 		DarkRealmObject.SetActive(true);
 		Debug.Log("You are entering the Dark Realm");	
