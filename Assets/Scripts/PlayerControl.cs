@@ -82,10 +82,13 @@ public class PlayerControl : MonoBehaviour {
 		if (Input.GetKeyDown("tab")) {
 			SwitchWorlds();
 		}
-		}
-
 		
 	}
+
+	if (inDarkRealm) {
+		DarkRealmCoolDown();
+	}
+}
 
 void playIdleAnim() {
 	if (isHolding) {
@@ -196,7 +199,6 @@ void SwitchWorlds() {
 	if (inDarkRealm == false) {
 		inDarkRealm = true;
 		DarkRealmObject.SetActive(true);
-		DarkRealmCoolDown();
 		Debug.Log("You are entering the Dark Realm");	
 	} else {
 		inDarkRealm = false;
@@ -207,6 +209,6 @@ void SwitchWorlds() {
 
 void DarkRealmCoolDown() {
 		Debug.Log(timerSlider.value);
-		timerSlider.value -= 1;
+		timerSlider.value -= Time.deltaTime;
 	}
 }
