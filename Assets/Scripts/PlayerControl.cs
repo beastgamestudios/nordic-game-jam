@@ -16,8 +16,8 @@ public class PlayerControl : MonoBehaviour {
 	private Slider timerSlider;
 	private Collider2D objectColliderBoxPlayerIsIn;
 	private Transform objectToBeLifted;
-	private string[][] allAnimations;
-	private string[] currentDirectionAnimations;
+	[HideInInspector]public string[][] allAnimations;
+	[HideInInspector]public string[] currentDirectionAnimations;
 
 	private enum directions{UP, RIGHT, DOWN, LEFT};
 	private enum states{IDLE, WALK, IDLE_HOLD, WALK_HOLD, ATTACK};
@@ -66,7 +66,7 @@ public class PlayerControl : MonoBehaviour {
 			
 			if (isHolding) {
 				isHolding = false;
-				//throw object
+				throwObject();
 				objectToBeLifted.parent = null;
 				playIdleAnim();
 			} else {
@@ -174,6 +174,27 @@ void OnTriggerExit2D(Collider2D other) {
 	if (other == objectColliderBoxPlayerIsIn) {
 		objectColliderBoxPlayerIsIn = null;
 	}
+}
+
+void throwObject() {
+	if (currentDirectionAnimations == allAnimations[(int)directions.UP]) {
+		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.UP, findGroundYpos());
+	}
+	if (currentDirectionAnimations == allAnimations[(int)directions.RIGHT]) {
+		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.RIGHT, findGroundYpos());
+	}
+	if (currentDirectionAnimations == allAnimations[(int)directions.DOWN]) {
+		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.DOWN, findGroundYpos());
+	}
+	if (currentDirectionAnimations == allAnimations[(int)directions.LEFT]) {
+		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.LEFT, findGroundYpos());
+	}
+	
+}
+
+float findGroundYpos() {
+	float boundsMin = GetComponent<BoxCollider2D>().bounds.min.y;
+	return boundsMin;
 }
 
 void ChangeWorlds() {
