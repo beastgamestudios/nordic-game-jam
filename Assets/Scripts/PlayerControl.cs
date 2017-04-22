@@ -186,12 +186,16 @@ void setObjectToPlayer() {
 
 void OnTriggerEnter2D(Collider2D other) {
 	if (other.gameObject.CompareTag("possessedObject")) {
-		control = false;
-		playerAnimator.Play(currentDirectionAnimations[(int)states.HURT]);
-		animationPlaying = currentDirectionAnimations[(int)states.HURT];
-		StartCoroutine(endAnimation());
-		//reduce player health
+		hurtPlayerAnim();
+		GetComponent<PlayerHealth>().reducePlayerHealth();
 	}
+}
+
+public void hurtPlayerAnim() {
+	control = false;
+	playerAnimator.Play(currentDirectionAnimations[(int)states.HURT]);
+	animationPlaying = currentDirectionAnimations[(int)states.HURT];
+	StartCoroutine(endAnimation());
 }
 
 void OnTriggerStay2D(Collider2D other) {
@@ -243,6 +247,9 @@ void SwitchWorlds() {
 		DarkRealmObject.SetActive(true);
 		Debug.Log("You are entering the Dark Realm");	
 	} else {
+		GetComponent<PlayerHealth>().reduceHealth = false;
+//		StopCoroutine(GetComponent<PlayerHealth>().CallReduceHealth());
+		coroutineStarted = false;
 		inDarkRealm = false;
 		DarkRealmObject.SetActive(false);
 		Debug.Log("You are going back to Reality");
@@ -254,7 +261,7 @@ void DarkRealmCoolDown() {
 		DarkRealmTimer.SetActive(true); //can see the timer in dark realm
 		if (timerSlider.value <= 0 && !coroutineStarted) {
 			GetComponent<PlayerHealth>().reduceHealth = true;
-			StartCoroutine(GetComponent<PlayerHealth>().CallReduceHealth());
+		//	StartCoroutine(GetComponent<PlayerHealth>().CallReduceHealth());
 			coroutineStarted = true;
 		}
 }
@@ -263,8 +270,6 @@ void DarkRealmCoolDown() {
 
 
 void DarkRealmRecharge() {
-		StopCoroutine(GetComponent<PlayerHealth>().CallReduceHealth());
-		coroutineStarted = false;
 		timerSlider.value += Time.deltaTime;
 		if (timerSlider.value >= timerSlider.maxValue) {
 			DarkRealmTimer.SetActive(false); //timer disappears when full
