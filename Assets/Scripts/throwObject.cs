@@ -12,9 +12,7 @@ public class throwObject : MonoBehaviour {
 	void Update() {
 		if (checkForGround) {
 			if (GetComponent<BoxCollider2D>().bounds.min.y <= groundYPos) {
-				GetComponent<Rigidbody2D>().gravityScale = 0;
-				GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-				GetComponent<Rigidbody2D>().isKinematic = true;
+				stopMovement();
 				checkForGround = false;
 				isPossessable = false;
 			}
@@ -28,6 +26,12 @@ public class throwObject : MonoBehaviour {
 		checkForGround = true;
 		groundYPos = findGroundYpos(direction);
 		isPossessable = true;
+	}
+
+	public void stopMovement() {
+		GetComponent<Rigidbody2D>().gravityScale = 0;
+		GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+		GetComponent<Rigidbody2D>().isKinematic = true;
 	}
 
 	float findGroundYpos(int direction) {
