@@ -17,7 +17,6 @@ public class PlayerHealth : MonoBehaviour {
 		}
 		if (playerHealth <= 0)
         {
-            playerHealth = 0;
             Debug.Log("The player is dead!");
         }
 	}

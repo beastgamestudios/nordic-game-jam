@@ -238,10 +238,16 @@ void SwitchWorlds() {
 void DarkRealmCoolDown() {
 		timerSlider.value -= Time.deltaTime;
 		DarkRealmTimer.SetActive(true); //can see the timer in dark realm
-		// PlayerHealth health = this.GetComponent<PlayerHealth>();
-		// if (timerSlider.value <= 0) {
-		// 	PlayerHealth.ReduceHealth(health);
+		if (timerSlider.value <= 0) {
+			InvokeRepeating("CallReduceHealth", 1.0f, 2.0f);
+		}
 }
+
+void CallReduceHealth() {
+	PlayerHealth Health = this.GetComponent<PlayerHealth>();
+	Health.ReduceHealth();
+}
+
 
 void DarkRealmRecharge() {
 		timerSlider.value += Time.deltaTime;
