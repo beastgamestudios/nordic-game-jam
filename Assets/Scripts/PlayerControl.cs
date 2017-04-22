@@ -9,6 +9,9 @@ public class PlayerControl : MonoBehaviour {
 	private Animator playerAnimator;
 	private bool DarkRealm; 
 	private Image DarkRealmImage;
+	private Dictionary<string, string>[] allAnimations;
+
+	private enum directions{UP, RIGHT, DOWN, LEFT};
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +19,7 @@ public class PlayerControl : MonoBehaviour {
 		// DarkRealmImage = GameObject.Find("Dark Realm").GetComponent<Image>();
 		playerAnimator = GetComponent<Animator>();
 		playerAnimator.enabled = true;
+		allAnimations = GetComponent<animationPrefixes>().allAnimations;
 	}
 	
 	// Update is called once per frame

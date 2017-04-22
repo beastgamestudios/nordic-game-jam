@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class animationPrefixes : MonoBehaviour {
-	public Dictionary<string, Dictionary<string, string>> allAnimations;
+	public Dictionary<string, string>[] allAnimations;
 	
 	private string[] keyNames = new string[] {"idle", "walk", "holdIdle", "walkHold"};
 	private string[] upNames = new string[] {"upIdle", "walkUp", "IdleUpHold", "walkUpHold"};
@@ -18,12 +18,7 @@ public class animationPrefixes : MonoBehaviour {
 		Dictionary <string, string> down = defineAnimation(downNames);
 		Dictionary <string, string> left = defineAnimation(leftNames);
 
-		allAnimations = new Dictionary<string, Dictionary<string, string>> {
-			{"up", up},
-			{"right", right},
-			{"down", down},
-			{"left", left}
-		};
+		allAnimations = new Dictionary<string, string>[] {up, right, down, left};
 	}
 
 	private Dictionary<string, string> defineAnimation(string[] animationNames) {
