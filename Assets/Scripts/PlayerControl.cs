@@ -23,8 +23,8 @@ public class PlayerControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		DarkRealm = false;
-		DarkRealmImage = GameObject.Find("Dark Realm").GetComponent<Image>();
-		timerSlider = GameObject.Find("Timer Slider").GetComponent<Slider>();
+//		DarkRealmImage = GameObject.Find("Dark Realm").GetComponent<Image>();
+//		timerSlider = GameObject.Find("Timer Slider").GetComponent<Slider>();
 		playerAnimator = GetComponent<Animator>();
 		playerAnimator.enabled = true;
 		allAnimations = GetComponent<animationPrefixes>().allAnimations;
@@ -59,6 +59,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown("a")) {
+			
 			if (isHolding) {
 				isHolding = false;
 				//throw object
@@ -134,6 +135,7 @@ void setObjectToPlayer() {
 
 void OnTriggerStay2D(Collider2D other) {
 	if (other.gameObject.CompareTag("liftObjectCollider")) {
+		Debug.Log(other.gameObject.name);
 		objectColliderBoxPlayerIsIn = other;
 	}
 }
