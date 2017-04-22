@@ -21,6 +21,7 @@ public class detectObject : MonoBehaviour {
 				//possess object
 				other.GetComponent<throwObject>().stopMovement();
 				other.gameObject.tag = "possessedObject";
+				
 				other.gameObject.AddComponent<followPlayer>();
 				other.gameObject.GetComponent<followPlayer>().player = other.GetComponent<throwObject>().player;
 				other.GetComponent<throwObject>().enabled = false;
@@ -31,4 +32,5 @@ public class detectObject : MonoBehaviour {
 			}
 		}
 	}
+
 }
