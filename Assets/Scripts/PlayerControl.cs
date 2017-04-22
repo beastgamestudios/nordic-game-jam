@@ -76,7 +76,7 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetKeyDown("b") && !inDarkRealm) {
+		if (Input.GetKeyDown("b") && !inDarkRealm && !isHolding) {
 			control = false;
 			playerAnimator.Play(currentDirectionAnimations[(int)states.ATTACK]);
 			animationPlaying = currentDirectionAnimations[(int)states.ATTACK];
