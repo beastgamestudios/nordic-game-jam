@@ -17,6 +17,7 @@ public class throwObject : MonoBehaviour {
 				stopMovement();
 				checkForGround = false;
 				isPossessable = false;
+				gameObject.layer = LayerMask.NameToLayer( "Default" );
 			}
 		}
 
@@ -25,6 +26,7 @@ public class throwObject : MonoBehaviour {
 				stopMovement();
 				checkForGroundAbove = false;
 				isPossessable = false;
+				gameObject.layer = LayerMask.NameToLayer( "Default" );
 			}
 		}
 	}
@@ -37,17 +39,16 @@ public class throwObject : MonoBehaviour {
 		if (direction == (int)directions.LEFT || direction == (int)directions.RIGHT) {
 			checkForGround = true;
 			groundYPos = findGroundYpos(direction);
-			isPossessable = true;
 		} else {
 			if (direction == (int)directions.UP) {
 				checkForGroundAbove = true;
-				isPossessable = true;
 			} else {
 				groundYPos = transform.position.y - groundDistanceBelowPlayer;
 				checkForGround = true;
-				isPossessable = true;
 			}
 		}
+		isPossessable = true;
+		gameObject.layer = LayerMask.NameToLayer( "ignorePlayer" );
 	}
 
 	public void stopMovement() {
