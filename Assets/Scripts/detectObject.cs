@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class detectObject : MonoBehaviour {
 	public Transform objectPrefab;
-	public Transform possessedObjectPrefab;
 	private string objectTag;
 
 	// Use this for initialization
@@ -14,10 +13,21 @@ public class detectObject : MonoBehaviour {
 	
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == objectTag) {
-			if (other.GetComponent<trackPossessability>().isPossessable) {
-				Instantiate(possessedObjectPrefab);
+			if (other.GetComponent<throwObject>().isPossessable) {
+				other.GetComponent<Animator>().Play("turnPossessed");
+//				Instantiate(possessedObjectPrefab);
 				gameObject.SetActive(false);
-				other.gameObject.SetActive(false);
+
+				//possess object
+				other.GetComponent<throwObject>().stopMovement();
+				other.gameObject.tag = "possessedObject";
+				other.gameObject.AddComponent<followPlayer>();
+				other.gameObject.GetComponent<followPlayer>().player = other.GetComponent<throwObject>().player;
+				other.GetComponent<throwObject>().enabled = false;
+				//destroy colliders which activate lift mechanic
+				foreach (Transform child in other.transform) {
+					Destroy(child.gameObject);
+				}
 			}
 		}
 	}
