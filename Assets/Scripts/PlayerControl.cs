@@ -13,12 +13,26 @@ public class PlayerControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		DarkRealm = false;
-		DarkRealmImage = GameObject.Find("Dark Realm").GetComponent<Image>();
-		playerAnimator = GetComponent<Animator> ();
+		// DarkRealmImage = GameObject.Find("Dark Realm").GetComponent<Image>();
+		playerAnimator = GetComponent<Animator>();
+		playerAnimator.enabled = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+	    if (Input.GetKeyUp("down")) {
+			playerAnimator.Play("IdleDown");
+		}
+	    if (Input.GetKeyUp("up")) {
+			playerAnimator.Play("IdleUp");
+		}
+	    if (Input.GetKeyUp("right")) {
+			playerAnimator.Play("IdleRight");
+		}
+	    if (Input.GetKeyUp("left")) {
+			playerAnimator.Play("IdleLeft");
+		}
+
 		if (Input.GetKey("down")) {
 			transform.position += new Vector3(0, -playerSpeed*Time.deltaTime);
 			playerAnimator.Play("walkDown");
@@ -35,10 +49,11 @@ public class PlayerControl : MonoBehaviour {
 			transform.position += new Vector3(-playerSpeed*Time.deltaTime, 0);
 			playerAnimator.Play("walkLeft");
 		}
+		
 		if (Input.GetKey("tab")) {
 			Debug.Log("You are entering the Dark Realm");
 			ChangeWorlds();
-		}		
+		}
 	}
 
 void ChangeWorlds() {
@@ -46,12 +61,12 @@ void ChangeWorlds() {
 	if (DarkRealm == false) {
 		//Enable UI Panel Dark Realm to be true
 		DarkRealm = true;
-		DarkRealmImage.enabled = true;
+		// DarkRealmImage.enabled = true;
 	}
 	if (DarkRealm == true) {
 		// ignore input
 		DarkRealm = false;
-		DarkRealmImage.enabled = false;
+		// DarkRealmImage.enabled = false;
 	}
 }
 
