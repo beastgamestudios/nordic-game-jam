@@ -7,6 +7,8 @@ public class PlayerControl : MonoBehaviour {
 
 	public float playerSpeed;
 	public float objectHeightAbovePlayer;
+	private bool control;
+	private string animationPlaying;
 	private Animator playerAnimator;
 	private bool DarkRealm; 
 	private bool isHolding;
@@ -29,10 +31,12 @@ public class PlayerControl : MonoBehaviour {
 		playerAnimator.enabled = true;
 		allAnimations = GetComponent<animationPrefixes>().allAnimations;
 		currentDirectionAnimations = allAnimations[(int)directions.DOWN];
+		control = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (control) {
 	    if (Input.GetKeyUp("down") || Input.GetKeyUp("up") || Input.GetKeyUp("right") || Input.GetKeyUp("left")) {
 			playIdleAnim();
 		}
@@ -71,13 +75,19 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown("b")) {
+			control = false;
 			playerAnimator.Play(currentDirectionAnimations[(int)states.ATTACK]);
+			animationPlaying = currentDirectionAnimations[(int)states.ATTACK];
+			StartCoroutine(endAnimation());
 		}
 		
 		if (Input.GetKey("tab")) {
 			Debug.Log("You are entering the Dark Realm");
 			ChangeWorlds();
 		}
+		}
+
+		
 	}
 
 void playIdleAnim() {
@@ -94,6 +104,22 @@ void playWalkAnim() {
 	} else {
 		playerAnimator.Play(currentDirectionAnimations[(int)states.WALK]);
 	}
+}
+
+IEnumerator endAnimation() {
+	RuntimeAnimatorController ac = playerAnimator.runtimeAnimatorController;
+	float animationLength = 0;
+	for(int i = 0; i<ac.animationClips.Length; i++)                 //For all animations
+     {
+         if(ac.animationClips[i].name == animationPlaying)        //If it has the same name as your clip
+         {
+             animationLength = ac.animationClips[i].length;
+         }
+     }
+	yield return new WaitForSeconds(animationLength);
+	control = true;
+	animationPlaying = null;
+	playIdleAnim();
 }
 
 void checkForObject() {
