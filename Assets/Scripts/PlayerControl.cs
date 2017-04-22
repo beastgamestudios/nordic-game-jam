@@ -7,7 +7,7 @@ public class PlayerControl : MonoBehaviour {
 
 	public float playerSpeed;
 	public float objectHeightAbovePlayer;
-	private bool control;
+	[HideInInspector]public bool control;
 	private string animationPlaying;
 	private Animator playerAnimator;
 	private bool inDarkRealm; 
@@ -25,6 +25,10 @@ public class PlayerControl : MonoBehaviour {
 	private enum directions{UP, RIGHT, DOWN, LEFT};
 	private enum states{IDLE, WALK, IDLE_HOLD, WALK_HOLD, ATTACK, HURT};
 
+	void Awake() {
+		control = true;
+	}
+
 	// Use this for initialization
 	void Start () {
 		inDarkRealm = false;
@@ -33,7 +37,6 @@ public class PlayerControl : MonoBehaviour {
 		playerAnimator.enabled = true;
 		allAnimations = GetComponent<animationPrefixes>().allAnimations;
 		currentDirectionAnimations = allAnimations[(int)directions.DOWN];
-		control = true;
 	}
 	
 	// Update is called once per frame
