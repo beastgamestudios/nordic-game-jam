@@ -9,11 +9,21 @@ public class throwObject : MonoBehaviour {
 	[HideInInspector]public bool isPossessable;
 	private enum directions{UP, RIGHT, DOWN, LEFT};
 	private float groundYPos;
+	public float groundDistanceBelowPlayer;
+	private bool checkForGroundAbove;
 	void Update() {
 		if (checkForGround) {
 			if (GetComponent<BoxCollider2D>().bounds.min.y <= groundYPos) {
 				stopMovement();
 				checkForGround = false;
+				isPossessable = false;
+			}
+		}
+
+		if (checkForGroundAbove) {
+			if (GetComponent<Rigidbody2D>().velocity.y < 0) {
+				stopMovement();
+				checkForGroundAbove = false;
 				isPossessable = false;
 			}
 		}
@@ -23,9 +33,21 @@ public class throwObject : MonoBehaviour {
 		GetComponent<Rigidbody2D>().isKinematic = false;
 		GetComponent<Rigidbody2D>().gravityScale = 1f;
 		GetComponent<Rigidbody2D>().AddForce(throwForce[direction]);
-		checkForGround = true;
-		groundYPos = findGroundYpos(direction);
-		isPossessable = true;
+
+		if (direction == (int)directions.LEFT || direction == (int)directions.RIGHT) {
+			checkForGround = true;
+			groundYPos = findGroundYpos(direction);
+			isPossessable = true;
+		} else {
+			if (direction == (int)directions.UP) {
+				checkForGroundAbove = true;
+				isPossessable = true;
+			} else {
+				groundYPos = transform.position.y - groundDistanceBelowPlayer;
+				checkForGround = true;
+				isPossessable = true;
+			}
+		}
 	}
 
 	public void stopMovement() {
@@ -35,7 +57,6 @@ public class throwObject : MonoBehaviour {
 	}
 
 	float findGroundYpos(int direction) {
-		
 		float boundsMin = player.GetComponent<BoxCollider2D>().bounds.min.y;
 		return boundsMin;
 	}
