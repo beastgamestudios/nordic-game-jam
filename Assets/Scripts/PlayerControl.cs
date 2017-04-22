@@ -16,8 +16,8 @@ public class PlayerControl : MonoBehaviour {
 	public Slider timerSlider;
 	private Collider2D objectColliderBoxPlayerIsIn;
 	private Transform objectToBeLifted;
-	private string[][] allAnimations;
-	private string[] currentDirectionAnimations;
+	[HideInInspector]public string[][] allAnimations;
+	[HideInInspector]public string[] currentDirectionAnimations;
 
 	private enum directions{UP, RIGHT, DOWN, LEFT};
 	private enum states{IDLE, WALK, IDLE_HOLD, WALK_HOLD, ATTACK};
@@ -64,7 +64,7 @@ public class PlayerControl : MonoBehaviour {
 			
 			if (isHolding) {
 				isHolding = false;
-				//throw object
+				throwObject();
 				objectToBeLifted.parent = null;
 				playIdleAnim();
 			} else {
@@ -172,6 +172,25 @@ void OnTriggerExit2D(Collider2D other) {
 		objectColliderBoxPlayerIsIn = null;
 	}
 }
+
+void throwObject() {
+	objectToBeLifted.GetComponent<throwObject>().player = gameObject;
+	if (currentDirectionAnimations == allAnimations[(int)directions.UP]) {
+		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.UP);
+	}
+	if (currentDirectionAnimations == allAnimations[(int)directions.RIGHT]) {
+		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.RIGHT);
+	}
+	if (currentDirectionAnimations == allAnimations[(int)directions.DOWN]) {
+		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.DOWN);
+	}
+	if (currentDirectionAnimations == allAnimations[(int)directions.LEFT]) {
+		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.LEFT);
+	}
+	
+}
+
+
 
 void SwitchWorlds() {
 	// Code to change back and forth between Reality and Dark Realm
