@@ -16,12 +16,17 @@ public class detectObject : MonoBehaviour {
 		if (other.gameObject.tag == objectTag) {
 			if (other.GetComponent<throwObject>().isPossessable) {
 				other.GetComponent<Animator>().Play("turnPossessed");
-				Debug.Log("possess object");
 //				Instantiate(possessedObjectPrefab);
-
 				gameObject.SetActive(false);
+
+				//possess object
 				other.GetComponent<throwObject>().stopMovement();
-//				other.gameObject.SetActive(false);
+				other.gameObject.tag = "possessedObject";
+				other.GetComponent<throwObject>().enabled = false;
+				//destroy colliders which activate lift mechanic
+				foreach (Transform child in other.transform) {
+					Destroy(child.gameObject);
+				}
 			}
 		}
 	}
