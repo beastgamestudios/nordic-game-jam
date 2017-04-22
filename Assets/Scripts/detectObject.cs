@@ -17,6 +17,7 @@ public class detectObject : MonoBehaviour {
 			if (other.GetComponent<trackPossessability>().isPossessable) {
 				Instantiate(possessedObjectPrefab);
 				gameObject.SetActive(false);
+				other.gameObject.SetActive(false);
 			}
 		}
 	}
