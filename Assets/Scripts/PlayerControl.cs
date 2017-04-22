@@ -21,6 +21,7 @@ public class PlayerControl : MonoBehaviour {
 	private Transform objectToBeLifted;
 	[HideInInspector]public string[][] allAnimations;
 	[HideInInspector]public string[] currentDirectionAnimations;
+	private bool coroutineStarted;
 
 	private enum directions{UP, RIGHT, DOWN, LEFT};
 	private enum states{IDLE, WALK, IDLE_HOLD, WALK_HOLD, ATTACK, HURT};
@@ -251,18 +252,19 @@ void SwitchWorlds() {
 void DarkRealmCoolDown() {
 		timerSlider.value -= Time.deltaTime;
 		DarkRealmTimer.SetActive(true); //can see the timer in dark realm
-		if (timerSlider.value <= 0) {
-			InvokeRepeating("CallReduceHealth", 1.0f, 2.0f);
+		if (timerSlider.value <= 0 && !coroutineStarted) {
+			GetComponent<PlayerHealth>().reduceHealth = true;
+			StartCoroutine(GetComponent<PlayerHealth>().CallReduceHealth());
+			coroutineStarted = true;
 		}
 }
 
-void CallReduceHealth() {
-	PlayerHealth Health = this.GetComponent<PlayerHealth>();
-	Health.ReduceHealth();
-}
+
 
 
 void DarkRealmRecharge() {
+		StopCoroutine(GetComponent<PlayerHealth>().CallReduceHealth());
+		coroutineStarted = false;
 		timerSlider.value += Time.deltaTime;
 		if (timerSlider.value >= timerSlider.maxValue) {
 			DarkRealmTimer.SetActive(false); //timer disappears when full

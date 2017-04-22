@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour {
 
 	public float playerHealth;
+	public bool reduceHealth;
 	
 	void Start() {
 	}
@@ -13,17 +14,22 @@ public class PlayerHealth : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown("space")) {
-			ReduceHealth();
+		//	ReduceHealth();
 		}
 		if (playerHealth <= 0)
         {
             Debug.Log("The player is dead!");
         }
+		
 	}
 
-	public void ReduceHealth() {
-		playerHealth -= Time.deltaTime;
-        Debug.Log("Player Health:" + playerHealth);		
+
+	public IEnumerator CallReduceHealth() {
+		for(;;) {
+			yield return new WaitForSeconds(1f);
+			playerHealth -= Time.deltaTime;
+        	Debug.Log("Player Health:" + playerHealth);	
+		}
 	}
 
 	// void OnTriggerEnter2D(Collider2D collider)
