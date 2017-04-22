@@ -14,10 +14,12 @@ public class detectObject : MonoBehaviour {
 	
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == objectTag) {
-			if (other.GetComponent<trackPossessability>().isPossessable) {
-				Instantiate(possessedObjectPrefab);
-				gameObject.SetActive(false);
-				other.gameObject.SetActive(false);
+			if (other.GetComponent<throwObject>().isPossessable) {
+				Debug.Log("possess object");
+//				Instantiate(possessedObjectPrefab);
+
+//				gameObject.SetActive(false);
+//				other.gameObject.SetActive(false);
 			}
 		}
 	}
