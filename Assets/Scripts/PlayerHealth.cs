@@ -22,7 +22,7 @@ public class PlayerHealth : MonoBehaviour {
         }
 	}
 
-	void ReduceHealth() {
+	public void ReduceHealth() {
 		playerHealth -= 1;
         Debug.Log("Player Health:" +playerHealth);		
 	}
