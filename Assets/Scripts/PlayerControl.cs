@@ -162,7 +162,6 @@ void setObjectToPlayer() {
 
 void OnTriggerStay2D(Collider2D other) {
 	if (other.gameObject.CompareTag("liftObjectCollider")) {
-		Debug.Log(other.gameObject.name);
 		objectColliderBoxPlayerIsIn = other;
 	}
 }
