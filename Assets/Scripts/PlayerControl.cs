@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviour {
 	private bool DarkRealm; 
 	private bool isHolding;
 	private Image DarkRealmImage;
+	private Slider timerSlider;
 	private string[][] allAnimations;
 	private string[] currentDirectionAnimations;
 
@@ -19,7 +20,8 @@ public class PlayerControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		DarkRealm = false;
-		// DarkRealmImage = GameObject.Find("Dark Realm").GetComponent<Image>();
+		DarkRealmImage = GameObject.Find("Dark Realm").GetComponent<Image>();
+		timerSlider = GameObject.Find("Timer Slider").GetComponent<Slider>();
 		playerAnimator = GetComponent<Animator>();
 		playerAnimator.enabled = true;
 		allAnimations = GetComponent<animationPrefixes>().allAnimations;
@@ -78,14 +80,17 @@ void playWalkAnim() {
 void ChangeWorlds() {
 	// Code to change back and forth between Reality and Dark Realm
 	if (DarkRealm == false) {
-		//Enable UI Panel Dark Realm to be true
 		DarkRealm = true;
-		// DarkRealmImage.enabled = true;
+		DarkRealmImage.enabled = true;
 	}
 	if (DarkRealm == true) {
-		// ignore input
 		DarkRealm = false;
-		// DarkRealmImage.enabled = false;
+		DarkRealmImage.enabled = false;
+	}
+}
+
+void DarkRealmCoolDown() {
+		Debug.Log(timerSlider.value);
 	}
 }
 
