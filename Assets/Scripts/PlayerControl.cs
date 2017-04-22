@@ -15,6 +15,8 @@ public class PlayerControl : MonoBehaviour {
 	public GameObject DarkRealmObject;
 	public GameObject DarkRealmTimer;
 	public Slider timerSlider;
+	public GameObject Ghost;
+	private SpriteRenderer ghostSprite; 
 	private Collider2D objectColliderBoxPlayerIsIn;
 	private Transform objectToBeLifted;
 	[HideInInspector]public string[][] allAnimations;
@@ -26,6 +28,7 @@ public class PlayerControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		inDarkRealm = false;
+		ghostSprite = Ghost.GetComponent<SpriteRenderer>() as SpriteRenderer;
 		playerAnimator = GetComponent<Animator>();
 		playerAnimator.enabled = true;
 		allAnimations = GetComponent<animationPrefixes>().allAnimations;
@@ -88,9 +91,11 @@ public class PlayerControl : MonoBehaviour {
 
 	if (inDarkRealm) {
 		DarkRealmCoolDown();
+		ghostSprite.enabled = true;
 	}
 	if (!inDarkRealm) {
 		DarkRealmRecharge();
+		ghostSprite.enabled = false;
 	}
 
 }

@@ -24,5 +24,13 @@ public class PlayerHealth : MonoBehaviour {
 
 	void ReduceHealth() {
 		playerHealth -= 1;
+        Debug.Log("Player Health:" +playerHealth);		
 	}
+
+	// void OnTriggerEnter2D(Collider2D collider)
+	// {
+	// 	if(Collider2D.collider.tag == "possessedObject") {
+	// 		ReduceHealth();
+	// 	}
+	// }
 }
