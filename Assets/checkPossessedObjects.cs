@@ -6,6 +6,7 @@ public class checkPossessedObjects : MonoBehaviour {
 	private GameObject ghostInCollider;
 	private enum directions{UP, RIGHT, DOWN, LEFT};
 	private GameObject deadGhostWalking;
+	public GameObject player;
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == "possessedObject") {
@@ -24,9 +25,23 @@ public class checkPossessedObjects : MonoBehaviour {
 			if (ghostInCollider != null) {
 				deadGhostWalking = ghostInCollider;
 				deadGhostWalking.gameObject.SetActive(false);
+				checkAllGhostsDead();
 //				StartCoroutine(killGhost());
 			}
 		}
+	}
+
+	void checkAllGhostsDead() {
+		GameObject[] allGhosts = GameObject.FindGameObjectsWithTag("possessedObject");
+		if (allGhosts.Length == 0) {
+			Debug.Log("ghost death animation");
+			player.GetComponent<PlayerControl>().control = false;
+		}
+	}
+
+	IEnumerator makeVortex() {
+		yield return new WaitForSeconds(2f);
+		Debug.Log("spawn vortex");
 	}
 
 	IEnumerator killGhost() {
