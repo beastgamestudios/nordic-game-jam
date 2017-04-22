@@ -21,6 +21,7 @@ public class PlayerControl : MonoBehaviour {
 	private Transform objectToBeLifted;
 	[HideInInspector]public string[][] allAnimations;
 	[HideInInspector]public string[] currentDirectionAnimations;
+	private bool coroutineStarted;
 
 	private enum directions{UP, RIGHT, DOWN, LEFT};
 	private enum states{IDLE, WALK, IDLE_HOLD, WALK_HOLD, ATTACK, HURT};
@@ -185,12 +186,16 @@ void setObjectToPlayer() {
 
 void OnTriggerEnter2D(Collider2D other) {
 	if (other.gameObject.CompareTag("possessedObject")) {
-		control = false;
-		playerAnimator.Play(currentDirectionAnimations[(int)states.HURT]);
-		animationPlaying = currentDirectionAnimations[(int)states.HURT];
-		StartCoroutine(endAnimation());
-		//reduce player health
+		hurtPlayerAnim();
+		GetComponent<PlayerHealth>().reducePlayerHealth();
 	}
+}
+
+public void hurtPlayerAnim() {
+	control = false;
+	playerAnimator.Play(currentDirectionAnimations[(int)states.HURT]);
+	animationPlaying = currentDirectionAnimations[(int)states.HURT];
+	StartCoroutine(endAnimation());
 }
 
 void OnTriggerStay2D(Collider2D other) {
@@ -238,10 +243,19 @@ void checkForGhosts() {
 void SwitchWorlds() {
 	// Code to change back and forth between Reality and Dark Realm
 	if (inDarkRealm == false) {
+		//trigger animation
+		control = false;
+		playerAnimator.Play("enterDarkRealm");
+		animationPlaying = "enterDarkRealm";
+		StartCoroutine(endAnimation());
+		
 		inDarkRealm = true;
 		DarkRealmObject.SetActive(true);
 		Debug.Log("You are entering the Dark Realm");	
 	} else {
+		GetComponent<PlayerHealth>().reduceHealth = false;
+//		StopCoroutine(GetComponent<PlayerHealth>().CallReduceHealth());
+		coroutineStarted = false;
 		inDarkRealm = false;
 		DarkRealmObject.SetActive(false);
 		Debug.Log("You are going back to Reality");
@@ -251,15 +265,14 @@ void SwitchWorlds() {
 void DarkRealmCoolDown() {
 		timerSlider.value -= Time.deltaTime;
 		DarkRealmTimer.SetActive(true); //can see the timer in dark realm
-		if (timerSlider.value <= 0) {
-			InvokeRepeating("CallReduceHealth", 1.0f, 2.0f);
+		if (timerSlider.value <= 0 && !coroutineStarted) {
+			GetComponent<PlayerHealth>().reduceHealth = true;
+		//	StartCoroutine(GetComponent<PlayerHealth>().CallReduceHealth());
+			coroutineStarted = true;
 		}
 }
 
-void CallReduceHealth() {
-	PlayerHealth Health = this.GetComponent<PlayerHealth>();
-	Health.ReduceHealth();
-}
+
 
 
 void DarkRealmRecharge() {
