@@ -10,10 +10,10 @@ public class PlayerControl : MonoBehaviour {
 	private bool control;
 	private string animationPlaying;
 	private Animator playerAnimator;
-	private bool DarkRealm; 
+	private bool inDarkRealm; 
 	private bool isHolding;
-	private Image DarkRealmImage;
-	private Slider timerSlider;
+	public GameObject DarkRealmObject;
+	public Slider timerSlider;
 	private Collider2D objectColliderBoxPlayerIsIn;
 	private Transform objectToBeLifted;
 	[HideInInspector]public string[][] allAnimations;
@@ -24,9 +24,7 @@ public class PlayerControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		DarkRealm = false;
-//		DarkRealmImage = GameObject.Find("Dark Realm").GetComponent<Image>();
-//		timerSlider = GameObject.Find("Timer Slider").GetComponent<Slider>();
+		inDarkRealm = false;
 		playerAnimator = GetComponent<Animator>();
 		playerAnimator.enabled = true;
 		allAnimations = GetComponent<animationPrefixes>().allAnimations;
@@ -81,9 +79,8 @@ public class PlayerControl : MonoBehaviour {
 			StartCoroutine(endAnimation());
 		}
 		
-		if (Input.GetKey("tab")) {
-			Debug.Log("You are entering the Dark Realm");
-			ChangeWorlds();
+		if (Input.GetKeyDown("tab")) {
+			SwitchWorlds();
 		}
 		}
 
@@ -195,20 +192,22 @@ void throwObject() {
 
 
 
-void ChangeWorlds() {
+void SwitchWorlds() {
 	// Code to change back and forth between Reality and Dark Realm
-	if (DarkRealm == false) {
-		DarkRealm = true;
-		DarkRealmImage.enabled = true;
-	}
-	if (DarkRealm == true) {
-		DarkRealm = false;
-		DarkRealmImage.enabled = false;
+	if (inDarkRealm == false) {
+		inDarkRealm = true;
+		DarkRealmObject.SetActive(true);
+		DarkRealmCoolDown();
+		Debug.Log("You are entering the Dark Realm");	
+	} else {
+		inDarkRealm = false;
+		DarkRealmObject.SetActive(false);
+		Debug.Log("You are going back to Reality");
 	}
 }
 
 void DarkRealmCoolDown() {
 		Debug.Log(timerSlider.value);
+		timerSlider.value -= 1;
 	}
 }
-
