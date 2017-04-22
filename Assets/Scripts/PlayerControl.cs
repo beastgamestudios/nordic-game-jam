@@ -20,38 +20,35 @@ public class PlayerControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey("down")) {
-			transform.position += new Vector3(0, -playerSpeed*Time.deltaTime);
-			playerAnimator.Play("walkDown");
-		}
 	    if (Input.GetKeyUp("down")) {
-			playerAnimator.Play("Idle");
+			playerAnimator.Play("IdleDown");
 		}
 	    if (Input.GetKeyUp("up")) {
-			playerAnimator.Play("IdleDown");
+			playerAnimator.Play("IdleUp");
 		}
 	    if (Input.GetKeyUp("right")) {
 			playerAnimator.Play("IdleRight");
 		}
 	    if (Input.GetKeyUp("left")) {
 			playerAnimator.Play("IdleLeft");
-		}		
+		}
 
+		if (Input.GetKey("down")) {
+			transform.position += new Vector3(0, -playerSpeed*Time.deltaTime);
+			playerAnimator.Play("walkDown");
+		}
 		if (Input.GetKey("up")) {
 			transform.position += new Vector3(0, playerSpeed*Time.deltaTime);
 			playerAnimator.Play("walkUp");
 		}
-
 		if (Input.GetKey("right")) {
 			transform.position += new Vector3(playerSpeed*Time.deltaTime, 0);
 			playerAnimator.Play("walkRight");
 		}
-
 		if (Input.GetKey("left")) {
 			transform.position += new Vector3(-playerSpeed*Time.deltaTime, 0);
 			playerAnimator.Play("walkLeft");
 		}
-
 		
 		if (Input.GetKey("tab")) {
 			Debug.Log("You are entering the Dark Realm");
