@@ -81,6 +81,7 @@ public class PlayerControl : MonoBehaviour {
 			playerAnimator.Play(currentDirectionAnimations[(int)states.ATTACK]);
 			animationPlaying = currentDirectionAnimations[(int)states.ATTACK];
 			StartCoroutine(endAnimation());
+			checkForGhosts();
 		}
 		
 		if (Input.GetKeyDown("tab")) {
@@ -200,6 +201,19 @@ void throwObject() {
 		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.LEFT);
 	}
 	
+}
+
+void checkForGhosts() {
+	checkPossessedObjects[] attackColliders = gameObject.GetComponentsInChildren<checkPossessedObjects>();
+	int i = 0;
+	for (; i < allAnimations.Length; i++) {
+		if (currentDirectionAnimations == allAnimations[i]) {
+			break;
+		}
+	}
+	foreach (checkPossessedObjects collider in attackColliders) {
+		collider.checkGhostInRange(i);
+	}
 }
 
 void SwitchWorlds() {
