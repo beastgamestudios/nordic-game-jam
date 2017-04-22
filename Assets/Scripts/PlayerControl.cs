@@ -8,10 +8,13 @@ public class PlayerControl : MonoBehaviour {
 	public float playerSpeed;
 	private Animator playerAnimator;
 	private bool DarkRealm; 
+	private bool isHolding;
 	private Image DarkRealmImage;
-	private Dictionary<string, string>[] allAnimations;
+	private string[][] allAnimations;
+	private string[] currentDirectionAnimations;
 
 	private enum directions{UP, RIGHT, DOWN, LEFT};
+	private enum states{IDLE, WALK, IDLE_HOLD, WALK_HOLD};
 
 	// Use this for initialization
 	void Start () {
@@ -20,38 +23,34 @@ public class PlayerControl : MonoBehaviour {
 		playerAnimator = GetComponent<Animator>();
 		playerAnimator.enabled = true;
 		allAnimations = GetComponent<animationPrefixes>().allAnimations;
+		currentDirectionAnimations = allAnimations[(int)directions.DOWN];
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    if (Input.GetKeyUp("down")) {
-			playerAnimator.Play("IdleDown");
-		}
-	    if (Input.GetKeyUp("up")) {
-			playerAnimator.Play("IdleUp");
-		}
-	    if (Input.GetKeyUp("right")) {
-			playerAnimator.Play("IdleRight");
-		}
-	    if (Input.GetKeyUp("left")) {
-			playerAnimator.Play("IdleLeft");
+	    if (Input.GetKeyUp("down") || Input.GetKeyUp("up") || Input.GetKeyUp("right") || Input.GetKeyUp("left")) {
+			playIdleAnim();
 		}
 
 		if (Input.GetKey("down")) {
 			transform.position += new Vector3(0, -playerSpeed*Time.deltaTime);
-			playerAnimator.Play("walkDown");
+			currentDirectionAnimations = allAnimations[(int)directions.DOWN];
+			playWalkAnim();
 		}
 		if (Input.GetKey("up")) {
 			transform.position += new Vector3(0, playerSpeed*Time.deltaTime);
-			playerAnimator.Play("walkUp");
+			currentDirectionAnimations = allAnimations[(int)directions.UP];
+			playWalkAnim();
 		}
 		if (Input.GetKey("right")) {
 			transform.position += new Vector3(playerSpeed*Time.deltaTime, 0);
-			playerAnimator.Play("walkRight");
+			currentDirectionAnimations = allAnimations[(int)directions.RIGHT];
+			playWalkAnim();
 		}
 		if (Input.GetKey("left")) {
 			transform.position += new Vector3(-playerSpeed*Time.deltaTime, 0);
-			playerAnimator.Play("walkLeft");
+			currentDirectionAnimations = allAnimations[(int)directions.LEFT];
+			playWalkAnim();
 		}
 		
 		if (Input.GetKey("tab")) {
@@ -59,6 +58,22 @@ public class PlayerControl : MonoBehaviour {
 			ChangeWorlds();
 		}
 	}
+
+void playIdleAnim() {
+	if (isHolding) {
+		playerAnimator.Play(currentDirectionAnimations[(int)states.IDLE_HOLD]);
+	} else {
+		playerAnimator.Play(currentDirectionAnimations[(int)states.IDLE]);
+	}
+}
+
+void playWalkAnim() {
+	if (isHolding) {
+		playerAnimator.Play(currentDirectionAnimations[(int)states.WALK_HOLD]);
+	} else {
+		playerAnimator.Play(currentDirectionAnimations[(int)states.WALK]);
+	}
+}
 
 void ChangeWorlds() {
 	// Code to change back and forth between Reality and Dark Realm
