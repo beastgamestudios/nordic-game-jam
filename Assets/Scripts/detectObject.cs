@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class detectObject : MonoBehaviour {
 	public Transform objectPrefab;
-	public Transform possessedObjectPrefab;
 	private string objectTag;
 
 	// Use this for initialization
