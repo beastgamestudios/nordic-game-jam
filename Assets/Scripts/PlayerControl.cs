@@ -263,6 +263,7 @@ void SwitchWorlds() {
 }
 
 void DarkRealmCoolDown() {
+	if (control) {
 		timerSlider.value -= Time.deltaTime;
 		DarkRealmTimer.SetActive(true); //can see the timer in dark realm
 		if (timerSlider.value <= 0 && !coroutineStarted) {
@@ -270,6 +271,7 @@ void DarkRealmCoolDown() {
 		//	StartCoroutine(GetComponent<PlayerHealth>().CallReduceHealth());
 			coroutineStarted = true;
 		}
+	}
 }
 
 
