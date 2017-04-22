@@ -6,10 +6,14 @@ using UnityEngine.UI;
 public class PlayerControl : MonoBehaviour {
 
 	public float playerSpeed;
+	public float objectHeightAbovePlayer;
 	private Animator playerAnimator;
 	private bool DarkRealm; 
 	private bool isHolding;
 	private Image DarkRealmImage;
+	private Slider timerSlider;
+	private Collider2D objectColliderBoxPlayerIsIn;
+	private Transform objectToBeLifted;
 	private string[][] allAnimations;
 	private string[] currentDirectionAnimations;
 
@@ -19,7 +23,8 @@ public class PlayerControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		DarkRealm = false;
-		// DarkRealmImage = GameObject.Find("Dark Realm").GetComponent<Image>();
+		DarkRealmImage = GameObject.Find("Dark Realm").GetComponent<Image>();
+		timerSlider = GameObject.Find("Timer Slider").GetComponent<Slider>();
 		playerAnimator = GetComponent<Animator>();
 		playerAnimator.enabled = true;
 		allAnimations = GetComponent<animationPrefixes>().allAnimations;
@@ -52,6 +57,17 @@ public class PlayerControl : MonoBehaviour {
 			currentDirectionAnimations = allAnimations[(int)directions.LEFT];
 			playWalkAnim();
 		}
+
+		if (Input.GetKeyDown("a")) {
+			if (isHolding) {
+				isHolding = false;
+				//throw object
+				objectToBeLifted.parent = null;
+				playIdleAnim();
+			} else {
+				checkForObject();
+			}
+		}
 		
 		if (Input.GetKey("tab")) {
 			Debug.Log("You are entering the Dark Realm");
@@ -75,18 +91,73 @@ void playWalkAnim() {
 	}
 }
 
-void ChangeWorlds() {
-	// Code to change back and forth between Reality and Dark Realm
-	if (DarkRealm == false) {
-		//Enable UI Panel Dark Realm to be true
-		DarkRealm = true;
-		// DarkRealmImage.enabled = true;
-	}
-	if (DarkRealm == true) {
-		// ignore input
-		DarkRealm = false;
-		// DarkRealmImage.enabled = false;
+void checkForObject() {
+	if (objectColliderBoxPlayerIsIn != null) {
+		switch (objectColliderBoxPlayerIsIn.transform.GetSiblingIndex()) {
+		case ((int)directions.UP):
+		if (currentDirectionAnimations == allAnimations[(int)directions.UP]) {
+			isHolding = true;
+			playIdleAnim();
+			setObjectToPlayer();
+		}
+		break;
+		case ((int)directions.RIGHT):
+		if (currentDirectionAnimations == allAnimations[(int)directions.RIGHT]) {
+			isHolding = true;
+			playIdleAnim();
+			setObjectToPlayer();
+		}
+		break;
+		case ((int)directions.DOWN):
+		if (currentDirectionAnimations == allAnimations[(int)directions.DOWN]) {
+			isHolding = true;
+			playIdleAnim();
+			setObjectToPlayer();
+		}
+		break;
+		case ((int)directions.LEFT):
+		if (currentDirectionAnimations == allAnimations[(int)directions.LEFT]) {
+			isHolding = true;
+			playIdleAnim();
+			setObjectToPlayer();
+		}
+		break;
+		}
 	}
 }
 
+void setObjectToPlayer() {
+	objectToBeLifted = objectColliderBoxPlayerIsIn.transform.parent;
+	objectToBeLifted.SetParent(transform);
+	objectToBeLifted.localPosition = new Vector2(0, objectHeightAbovePlayer);
 }
+
+void OnTriggerStay2D(Collider2D other) {
+	if (other.gameObject.CompareTag("liftObjectCollider")) {
+		objectColliderBoxPlayerIsIn = other;
+	}
+}
+
+void OnTriggerExit2D(Collider2D other) {
+	if (other == objectColliderBoxPlayerIsIn) {
+		objectColliderBoxPlayerIsIn = null;
+	}
+}
+
+void ChangeWorlds() {
+	// Code to change back and forth between Reality and Dark Realm
+	if (DarkRealm == false) {
+		DarkRealm = true;
+		DarkRealmImage.enabled = true;
+	}
+	if (DarkRealm == true) {
+		DarkRealm = false;
+		DarkRealmImage.enabled = false;
+	}
+}
+
+void DarkRealmCoolDown() {
+		Debug.Log(timerSlider.value);
+	}
+}
+
