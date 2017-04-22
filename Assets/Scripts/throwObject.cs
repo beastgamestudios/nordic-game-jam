@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class throwObject : MonoBehaviour {
-	public Vector2[] throwForce;
+	public Vector3[] throwForce;
 	[HideInInspector]public bool checkForGround;
+	[HideInInspector]public GameObject player;
+	private enum directions{UP, RIGHT, DOWN, LEFT};
 	private float groundYPos;
 	void Update() {
 		if (checkForGround) {
@@ -17,11 +19,17 @@ public class throwObject : MonoBehaviour {
 		}
 	}
 
-	public void addThrowForce(int direction, float ground) {
+	public void addThrowForce(int direction) {
 		GetComponent<Rigidbody2D>().isKinematic = false;
 		GetComponent<Rigidbody2D>().gravityScale = 1f;
 		GetComponent<Rigidbody2D>().AddForce(throwForce[direction]);
 		checkForGround = true;
-		groundYPos = ground;
+		groundYPos = findGroundYpos(direction);
+	}
+
+	float findGroundYpos(int direction) {
+		
+		float boundsMin = player.GetComponent<BoxCollider2D>().bounds.min.y;
+		return boundsMin;
 	}
 }

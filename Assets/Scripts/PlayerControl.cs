@@ -177,25 +177,23 @@ void OnTriggerExit2D(Collider2D other) {
 }
 
 void throwObject() {
+	objectToBeLifted.GetComponent<throwObject>().player = gameObject;
 	if (currentDirectionAnimations == allAnimations[(int)directions.UP]) {
-		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.UP, findGroundYpos());
+		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.UP);
 	}
 	if (currentDirectionAnimations == allAnimations[(int)directions.RIGHT]) {
-		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.RIGHT, findGroundYpos());
+		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.RIGHT);
 	}
 	if (currentDirectionAnimations == allAnimations[(int)directions.DOWN]) {
-		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.DOWN, findGroundYpos());
+		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.DOWN);
 	}
 	if (currentDirectionAnimations == allAnimations[(int)directions.LEFT]) {
-		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.LEFT, findGroundYpos());
+		objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.LEFT);
 	}
 	
 }
 
-float findGroundYpos() {
-	float boundsMin = GetComponent<BoxCollider2D>().bounds.min.y;
-	return boundsMin;
-}
+
 
 void ChangeWorlds() {
 	// Code to change back and forth between Reality and Dark Realm
