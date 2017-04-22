@@ -64,7 +64,7 @@ public class PlayerControl : MonoBehaviour {
 			playWalkAnim();
 		}
 
-		if (Input.GetKeyDown("a")) {
+		if (Input.GetKeyDown("a") && !inDarkRealm) {
 			
 			if (isHolding) {
 				isHolding = false;
@@ -76,7 +76,7 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetKeyDown("b")) {
+		if (Input.GetKeyDown("b") && !inDarkRealm && !isHolding) {
 			control = false;
 			playerAnimator.Play(currentDirectionAnimations[(int)states.ATTACK]);
 			animationPlaying = currentDirectionAnimations[(int)states.ATTACK];
@@ -86,6 +86,12 @@ public class PlayerControl : MonoBehaviour {
 		
 		if (Input.GetKeyDown("tab")) {
 			SwitchWorlds();
+			if (isHolding) {
+				objectToBeLifted.transform.parent = null;
+				objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.DOWN);
+				isHolding = false;
+				playIdleAnim();
+			}
 		}
 		
 	}
