@@ -19,7 +19,7 @@ public class spawnFamilyMember : MonoBehaviour {
 		float animationLength = 0;
 		for(int i = 0; i<ac.animationClips.Length; i++)                 //For all animations
      	{
-        	if(ac.animationClips[i].name == "vortexAnimation")        //If it has the same name as your clip
+        	if(ac.animationClips[i].name == "spawnVortex")        //If it has the same name as your clip
         	{
             	animationLength = ac.animationClips[i].length;
         	}

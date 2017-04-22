@@ -7,6 +7,7 @@ public class checkPossessedObjects : MonoBehaviour {
 	private enum directions{UP, RIGHT, DOWN, LEFT};
 	private GameObject deadGhostWalking;
 	public GameObject player;
+	public Transform vortex;
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == "possessedObject") {
@@ -38,6 +39,7 @@ public class checkPossessedObjects : MonoBehaviour {
 		if (allGhosts.Length == 0) {
 			player.GetComponent<PlayerControl>().control = false;
 			Debug.Log("vortex spawn");
+			Instantiate(vortex);
 		}
 	}
 
