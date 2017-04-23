@@ -26,7 +26,7 @@ public class displayText : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		player.GetComponent<PlayerControl>().control = false;
-		if (Input.GetKeyDown("a")) {
+		if (Input.GetButtonDown("A button")) {
 
 			if (currentLine < totalLines) {
 				GetComponent<Text>().text = lines[currentLine];

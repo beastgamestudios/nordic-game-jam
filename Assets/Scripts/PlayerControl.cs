@@ -47,33 +47,54 @@ public class PlayerControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (control) {
-	    if (Input.GetKeyUp("down") || Input.GetKeyUp("up") || Input.GetKeyUp("right") || Input.GetKeyUp("left")) {
-			playIdleAnim();
-		}
+	//    if (Input.GetKeyUp("down") || Input.GetKeyUp("up") || Input.GetKeyUp("right") || Input.GetKeyUp("left")) {
+	//		playIdleAnim();
+	//	}
 
+		Vector2 getInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+		if (Mathf.Abs(getInput.x) < 0.5f && Mathf.Abs(getInput.y) < 0.5f) {
+			playIdleAnim();
+		} else if (Mathf.Abs(getInput.x) > Mathf.Abs(getInput.y)) {
+			if (getInput.x > 0) {
+				currentDirectionAnimations = allAnimations[(int)directions.RIGHT];
+			} else {
+				currentDirectionAnimations = allAnimations[(int)directions.LEFT];
+			}
+			transform.position += new Vector3(getInput.x, getInput.y)*playerSpeed*Time.deltaTime;
+			playWalkAnim();
+		} else {
+			if (getInput.y > 0) {
+				currentDirectionAnimations = allAnimations[(int)directions.UP];
+			} else {
+				currentDirectionAnimations = allAnimations[(int)directions.DOWN];
+			}
+			transform.position += new Vector3(getInput.x, getInput.y)*playerSpeed*Time.deltaTime;
+			playWalkAnim();
+		}
+/* 
 		if (Input.GetKey("down")) {
 			transform.position += new Vector3(0, -playerSpeed*Time.deltaTime);
 			currentDirectionAnimations = allAnimations[(int)directions.DOWN];
 			playWalkAnim();
 		}
-		if (Input.GetKey("up")) {
+		else if (Input.GetKey("up")) {
 			transform.position += new Vector3(0, playerSpeed*Time.deltaTime);
 			currentDirectionAnimations = allAnimations[(int)directions.UP];
 			playWalkAnim();
 		}
-		if (Input.GetKey("right")) {
+		else if (Input.GetKey("right")) {
 			transform.position += new Vector3(playerSpeed*Time.deltaTime, 0);
 			currentDirectionAnimations = allAnimations[(int)directions.RIGHT];
 			playWalkAnim();
 		}
-		if (Input.GetKey("left")) {
+		else if (Input.GetKey("left")) {
 			transform.position += new Vector3(-playerSpeed*Time.deltaTime, 0);
 			currentDirectionAnimations = allAnimations[(int)directions.LEFT];
 			playWalkAnim();
 		}
-
-		if (Input.GetKeyDown("a") && !inDarkRealm) {
-			
+*/
+//		if (Input.GetKeyDown("a") && !inDarkRealm) {
+		if (Input.GetButtonDown("A button") && !inDarkRealm) {
 			if (isHolding) {
 				isHolding = false;
 				throwObject();
@@ -84,7 +105,7 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetKeyDown("b") && !inDarkRealm && !isHolding) {
+		if (Input.GetButtonDown("B button") && !inDarkRealm && !isHolding) {
 			slashSound.Play();
 			control = false;
 			playerAnimator.Play(currentDirectionAnimations[(int)states.ATTACK]);
@@ -93,7 +114,7 @@ public class PlayerControl : MonoBehaviour {
 			checkForGhosts();
 		}
 		
-		if (Input.GetKeyDown("tab")) {
+		if (Input.GetButtonDown("X button")) {
 			SwitchWorlds();
 			if (isHolding) {
 				objectToBeLifted.transform.parent = null;
