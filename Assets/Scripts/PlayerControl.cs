@@ -25,7 +25,9 @@ public class PlayerControl : MonoBehaviour {
 	[HideInInspector]public bool dead;
 	private enum directions{UP, RIGHT, DOWN, LEFT};
 	private enum states{IDLE, WALK, IDLE_HOLD, WALK_HOLD, ATTACK, HURT};
-
+	public AudioSource slashSound;
+	public AudioSource hurtSound;
+	public AudioSource triggerSound;
 	void Awake() {
 		control = true;
 		
@@ -83,6 +85,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown("b") && !inDarkRealm && !isHolding) {
+			slashSound.Play();
 			control = false;
 			playerAnimator.Play(currentDirectionAnimations[(int)states.ATTACK]);
 			animationPlaying = currentDirectionAnimations[(int)states.ATTACK];
@@ -209,6 +212,7 @@ void OnTriggerEnter2D(Collider2D other) {
 
 public void hurtPlayerAnim() {
 	if (!dead) {
+		hurtSound.Play();
 		control = false;
 		playerAnimator.Play(currentDirectionAnimations[(int)states.HURT]);
 		animationPlaying = currentDirectionAnimations[(int)states.HURT];
@@ -262,6 +266,7 @@ void SwitchWorlds() {
 	// Code to change back and forth between Reality and Dark Realm
 	if (inDarkRealm == false) {
 		//trigger animation
+		triggerSound.Play();
 		control = false;
 		playerAnimator.Play("enterDarkRealm");
 		animationPlaying = "enterDarkRealm";
