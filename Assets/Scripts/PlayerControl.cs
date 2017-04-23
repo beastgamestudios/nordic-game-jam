@@ -38,7 +38,7 @@ public class PlayerControl : MonoBehaviour {
 		ghostSprite = Ghost.GetComponent<SpriteRenderer>() as SpriteRenderer;
 		playerAnimator = GetComponent<Animator>();
 		playerAnimator.enabled = true;
-		allAnimations = GetComponent<animationPrefixes>().allAnimations;
+		setAnimationNames();
 		currentDirectionAnimations = allAnimations[(int)directions.DOWN];
 	}
 	
@@ -112,6 +112,20 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 }
+
+void setAnimationNames () {
+		string[] upNames = new string[] {"IdleUp", "walkUp", "IdleUpHold", "walkUpHold", "AttackUp", "HurtUp"};
+		string[] rightNames = new string[] {"IdleRight", "walkRight", "IdleRightHold", "walkRightHold", "AttackRight", "HurtRight"};
+		string[] downNames = new string[] {"IdleDown", "walkDown", "IdleDownHold", "walkDownHold", "AttackDown", "HurtDown"};
+		string[] leftNames = new string[] {"IdleLeft", "walkLeft", "IdleLeftHold", "walkLeftHold", "AttackLeft", "HurtLeft"};
+
+		allAnimations = new string[][] {
+			upNames,
+			rightNames,
+			downNames,
+			leftNames
+		};
+	}
 
 void playIdleAnim() {
 	if (isHolding) {
