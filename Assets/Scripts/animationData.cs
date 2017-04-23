@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class animationPrefixes : MonoBehaviour {
+public class animationData : MonoBehaviour {
+
 	[HideInInspector]public string[][] allAnimations;
 	
 	private string[] upNames;
@@ -23,10 +24,5 @@ public class animationPrefixes : MonoBehaviour {
 			downNames,
 			leftNames
 		};
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }
