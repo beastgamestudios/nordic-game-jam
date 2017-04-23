@@ -9,10 +9,12 @@ public class followPlayer : MonoBehaviour {
 	private bool startMoving;
 	// Use this for initialization
 	void Start () {
+		player = GameObject.FindGameObjectWithTag("Player");
 		StartCoroutine(getDirection());
 		StartCoroutine(pause());
 		GetComponent<Rigidbody2D>().isKinematic = false;
 		gameObject.layer = LayerMask.NameToLayer( "Default" );
+		
 	}
 	
 	// Update is called once per frame

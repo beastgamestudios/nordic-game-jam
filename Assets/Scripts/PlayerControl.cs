@@ -10,7 +10,7 @@ public class PlayerControl : MonoBehaviour {
 	[HideInInspector]public bool control;
 	private string animationPlaying;
 	private Animator playerAnimator;
-	private bool inDarkRealm; 
+	[HideInInspector]public bool inDarkRealm; 
 	private bool isHolding;
 	public GameObject DarkRealmObject;
 	public GameObject DarkRealmTimer;
