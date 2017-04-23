@@ -1,13 +1,12 @@
 fileFormatVersion: 2
-guid: fb43a4a89f737453ba274ce201ea53df
-timeCreated: 1492920415
+guid: 83cda1ea72b0f41c5bd5876cf6704fd4
+timeCreated: 1492921146
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: mcPortrait_0
-    21300002: mcPortrait_1
-    21300004: mcPortrait_2
-    21300006: mcPortrait_3
+    21300000: playerCasting_0
+    21300002: playerCasting_1
+    21300004: playerCasting_2
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -90,54 +89,41 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mcPortrait_0
+      name: playerCasting_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 98
+        y: 0
         width: 32
-        height: 30
-      alignment: 9
-      pivot: {x: 0.4937402, y: 0.3931666}
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mcPortrait_1
+      name: playerCasting_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 66
+        x: 32
+        y: 0
         width: 32
-        height: 30
-      alignment: 9
-      pivot: {x: 0.49999997, y: 0.4265521}
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mcPortrait_2
+      name: playerCasting_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 34
+        x: 64
+        y: 0
         width: 32
-        height: 30
-      alignment: 9
-      pivot: {x: 0.49999997, y: 0.41319785}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: mcPortrait_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 2
-        width: 32
-        height: 30
-      alignment: 9
-      pivot: {x: 0.49999997, y: 0.43322915}
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
