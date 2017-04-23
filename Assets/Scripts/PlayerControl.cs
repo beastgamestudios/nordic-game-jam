@@ -192,10 +192,10 @@ void OnTriggerEnter2D(Collider2D other) {
 }
 
 public void hurtPlayerAnim() {
-	control = false;
-	playerAnimator.Play(currentDirectionAnimations[(int)states.HURT]);
-	animationPlaying = currentDirectionAnimations[(int)states.HURT];
-	StartCoroutine(endAnimation());
+		control = false;
+		playerAnimator.Play(currentDirectionAnimations[(int)states.HURT]);
+		animationPlaying = currentDirectionAnimations[(int)states.HURT];
+		StartCoroutine(endAnimation());
 }
 
 void OnTriggerStay2D(Collider2D other) {

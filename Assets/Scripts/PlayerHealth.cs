@@ -39,13 +39,13 @@ public class PlayerHealth : MonoBehaviour {
 
 
 	public void reducePlayerHealth() {
-		playerHealth -= 1;
-		foreach (Image heart in hearts) {
-			if (heart.transform.GetSiblingIndex() == playerHealth) {
-				heart.gameObject.SetActive(false);
+			playerHealth -= 1;
+			foreach (Image heart in hearts) {
+				if (heart.transform.GetSiblingIndex() == playerHealth) {
+					heart.gameObject.SetActive(false);
+				}
 			}
 		}
-	}
 
 	// void OnTriggerEnter2D(Collider2D collider)
 	// {
