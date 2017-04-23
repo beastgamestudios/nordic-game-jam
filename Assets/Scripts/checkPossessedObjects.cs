@@ -6,6 +6,7 @@ public class checkPossessedObjects : MonoBehaviour {
 	private GameObject ghostInCollider;
 	private enum directions{UP, RIGHT, DOWN, LEFT};
 	private GameObject deadGhostWalking;
+	private GameObject mirror;
 	public GameObject player;
 	public Transform vortex;
 	public Transform familyMember;
@@ -14,11 +15,17 @@ public class checkPossessedObjects : MonoBehaviour {
 		if (other.gameObject.tag == "possessedObject") {
 			ghostInCollider = other.gameObject;
 		}
+		if (other.gameObject.tag == "mirror") {
+			mirror = other.gameObject;
+		}
 	}
 
 	void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject == ghostInCollider) {
 			ghostInCollider = null;
+		}
+		if (other.gameObject == mirror) {
+			mirror = null;
 		}
 	}
 
@@ -31,6 +38,9 @@ public class checkPossessedObjects : MonoBehaviour {
 				StartCoroutine(endAnimation());
 				
 //				StartCoroutine(killGhost());
+			}
+			if (mirror != null) {
+				player.GetComponent<hitMirror>().addForceToMirror();
 			}
 		}
 	}
