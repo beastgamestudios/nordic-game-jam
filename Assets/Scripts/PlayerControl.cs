@@ -28,10 +28,12 @@ public class PlayerControl : MonoBehaviour {
 
 	void Awake() {
 		control = true;
+		
 	}
 
 	// Use this for initialization
 	void Start () {
+	//	gameObject.AddComponent<animationPrefixes>();
 		inDarkRealm = false;
 		ghostSprite = Ghost.GetComponent<SpriteRenderer>() as SpriteRenderer;
 		playerAnimator = GetComponent<Animator>();
