@@ -16,7 +16,7 @@ public class detectMirror : MonoBehaviour {
 			if (other.GetComponent<possessableMirror>().isPossessable) {
 				Debug.Log("mirror is possessed");
 				possessSound.Play();
-				//other.GetComponent<Animator>().Play("possessMirror");
+				other.GetComponent<Animator>().Play("mirrorPossessed");
 				gameObject.SetActive(false);
 
 				//possess object
@@ -26,6 +26,7 @@ public class detectMirror : MonoBehaviour {
 				//player.GetComponent<hitMirror>().enabled = false;
 				other.gameObject.AddComponent<followPlayer>();
 				other.gameObject.GetComponent<followPlayer>().player = player;
+				other.GetComponent<BoxCollider2D>().isTrigger = true;
 				//other.GetComponent<>().enabled = false;
 				//other.GetComponent<BoxCollider2D>().isTrigger = true;
 				//destroy colliders which activate lift mechanic

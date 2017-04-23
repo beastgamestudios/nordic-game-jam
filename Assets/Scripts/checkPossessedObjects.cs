@@ -32,18 +32,19 @@ public class checkPossessedObjects : MonoBehaviour {
 	public void checkGhostInRange(int direction) {
 		if (direction == transform.GetSiblingIndex()) {
 			if (ghostInCollider != null) {
-				ghostInCollider.GetComponent<followPlayer>().enabled = false;
 				if (ghostInCollider.gameObject.name == "mirror") {
 					if (!mirrorHitOnce) {
-						ghostInCollider.GetComponent<Animator>().Play("mirrorCrack");
+						ghostInCollider.GetComponent<Animator>().Play("mirrorCracked");
 						mirrorHitOnce = true;
 					} else {
+						ghostInCollider.GetComponent<followPlayer>().enabled = false;
 						ghostInCollider.GetComponent<Animator>().Play("mirrorFullyCracked");
-						StartCoroutine(endAnimation());
+						StartCoroutine(endAnimation("mirrorFullyCracked"));
 					}
 				} else {
+					ghostInCollider.GetComponent<followPlayer>().enabled = false;
 					ghostInCollider.GetComponent<Animator>().Play("ghostDying");
-					StartCoroutine(endAnimation());
+					StartCoroutine(endAnimation("ghostDying"));
 				}
 				
 				
@@ -67,19 +68,26 @@ public class checkPossessedObjects : MonoBehaviour {
 		}
 	}
 
-	IEnumerator endAnimation() {
+	IEnumerator endAnimation(string animationName) {
 		RuntimeAnimatorController ac = ghostInCollider.GetComponent<Animator>().runtimeAnimatorController;
 		float animationLength = 0;
 		for(int i = 0; i<ac.animationClips.Length; i++)                 //For all animations
      	{
-        	if(ac.animationClips[i].name == "ghostDying")        //If it has the same name as your clip
+        	if(ac.animationClips[i].name == animationName)        //If it has the same name as your clip
         	{
             	animationLength = ac.animationClips[i].length;
         	}
      	}
 		yield return new WaitForSeconds(animationLength);
 		ghostInCollider.gameObject.SetActive(false);
-		checkAllGhostsDead();
+		if (animationName == "ghostDying") {
+			checkAllGhostsDead();
+		} else {
+			player.GetComponent<PlayerControl>().control = false;
+			Debug.Log("vortex spawn");
+			Transform newVortex = Instantiate(vortex);
+			newVortex.GetComponent<spawnFamilyMember>().familyMember = familyMember;
+		}
 	}
 
 
