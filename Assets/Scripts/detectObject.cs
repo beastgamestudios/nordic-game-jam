@@ -34,4 +34,24 @@ public class detectObject : MonoBehaviour {
 		}
 	}
 
+	public void possessObject(Collider2D other, GameObject player) {
+		other.GetComponent<Animator>().Play("turnPossessed");
+//		Instantiate(possessedObjectPrefab);
+		gameObject.SetActive(false);
+
+				//possess object
+		other.GetComponent<throwObject>().stopMovement();
+		other.gameObject.tag = "possessedObject";
+				
+		other.gameObject.AddComponent<followPlayer>();
+		other.gameObject.GetComponent<followPlayer>().player = player;
+		other.GetComponent<throwObject>().enabled = false;
+		other.GetComponent<BoxCollider2D>().isTrigger = true;
+				//destroy colliders which activate lift mechanic
+		foreach (Transform child in other.transform) {
+			Destroy(child.gameObject);
+		}
+
+	}
+
 }
