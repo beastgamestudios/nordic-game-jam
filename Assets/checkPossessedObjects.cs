@@ -8,6 +8,7 @@ public class checkPossessedObjects : MonoBehaviour {
 	private GameObject deadGhostWalking;
 	public GameObject player;
 	public Transform vortex;
+	public Transform familyMember;
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == "possessedObject") {
@@ -39,7 +40,8 @@ public class checkPossessedObjects : MonoBehaviour {
 		if (allGhosts.Length == 0) {
 			player.GetComponent<PlayerControl>().control = false;
 			Debug.Log("vortex spawn");
-			Instantiate(vortex);
+			Transform newVortex = Instantiate(vortex);
+			newVortex.GetComponent<spawnFamilyMember>().familyMember = familyMember;
 		}
 	}
 
