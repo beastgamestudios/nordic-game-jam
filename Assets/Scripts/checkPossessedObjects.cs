@@ -38,6 +38,7 @@ public class checkPossessedObjects : MonoBehaviour {
 						mirrorHitOnce = true;
 						StartCoroutine(mirrorFlinch());
 					} else {
+						StopCoroutine(mirrorFlinch());
 						ghostInCollider.GetComponent<followPlayer>().enabled = false;
 						ghostInCollider.GetComponent<Animator>().Play("mirrorFullyCracked");
 						StartCoroutine(endAnimation("mirrorFullyCracked"));
