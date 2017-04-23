@@ -37,7 +37,9 @@ public class checkPossessedObjects : MonoBehaviour {
 
 	void checkAllGhostsDead() {
 		GameObject[] allGhosts = GameObject.FindGameObjectsWithTag("possessedObject");
-		if (allGhosts.Length == 0) {
+		GameObject[] allObjects = GameObject.FindGameObjectsWithTag("objectTag");
+
+		if (allGhosts.Length + allObjects.Length == 0) {
 			player.GetComponent<PlayerControl>().control = false;
 			Debug.Log("vortex spawn");
 			Transform newVortex = Instantiate(vortex);
