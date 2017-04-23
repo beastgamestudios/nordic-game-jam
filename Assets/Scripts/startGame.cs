@@ -13,7 +13,7 @@ public class startGame : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetButtonDown("Start")) {
-			SceneManager.LoadScene("Main");
+			SceneManager.LoadScene("Opening");
 		}
 	}
 }
