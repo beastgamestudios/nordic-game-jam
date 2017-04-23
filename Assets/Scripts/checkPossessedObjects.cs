@@ -5,11 +5,11 @@ using UnityEngine;
 public class checkPossessedObjects : MonoBehaviour {
 	private GameObject ghostInCollider;
 	private enum directions{UP, RIGHT, DOWN, LEFT};
-	private GameObject deadGhostWalking;
 	private GameObject mirror;
 	public GameObject player;
 	public Transform vortex;
 	public Transform familyMember;
+	private bool mirrorHitOnce;
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == "possessedObject") {
@@ -32,10 +32,20 @@ public class checkPossessedObjects : MonoBehaviour {
 	public void checkGhostInRange(int direction) {
 		if (direction == transform.GetSiblingIndex()) {
 			if (ghostInCollider != null) {
-				deadGhostWalking = ghostInCollider;
-				deadGhostWalking.GetComponent<followPlayer>().enabled = false;
-				deadGhostWalking.GetComponent<Animator>().Play("ghostDying");
-				StartCoroutine(endAnimation());
+				ghostInCollider.GetComponent<followPlayer>().enabled = false;
+				if (ghostInCollider.gameObject.name == "mirror") {
+					if (!mirrorHitOnce) {
+						ghostInCollider.GetComponent<Animator>().Play("mirrorCrack");
+						mirrorHitOnce = true;
+					} else {
+						ghostInCollider.GetComponent<Animator>().Play("mirrorFullyCracked");
+						StartCoroutine(endAnimation());
+					}
+				} else {
+					ghostInCollider.GetComponent<Animator>().Play("ghostDying");
+					StartCoroutine(endAnimation());
+				}
+				
 				
 //				StartCoroutine(killGhost());
 			}
@@ -58,7 +68,7 @@ public class checkPossessedObjects : MonoBehaviour {
 	}
 
 	IEnumerator endAnimation() {
-		RuntimeAnimatorController ac = deadGhostWalking.GetComponent<Animator>().runtimeAnimatorController;
+		RuntimeAnimatorController ac = ghostInCollider.GetComponent<Animator>().runtimeAnimatorController;
 		float animationLength = 0;
 		for(int i = 0; i<ac.animationClips.Length; i++)                 //For all animations
      	{
@@ -68,7 +78,7 @@ public class checkPossessedObjects : MonoBehaviour {
         	}
      	}
 		yield return new WaitForSeconds(animationLength);
-		deadGhostWalking.gameObject.SetActive(false);
+		ghostInCollider.gameObject.SetActive(false);
 		checkAllGhostsDead();
 	}
 
