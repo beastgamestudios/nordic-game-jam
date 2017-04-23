@@ -36,6 +36,7 @@ public class checkPossessedObjects : MonoBehaviour {
 					if (!mirrorHitOnce) {
 						ghostInCollider.GetComponent<Animator>().Play("mirrorCracked");
 						mirrorHitOnce = true;
+						StartCoroutine(mirrorFlinch());
 					} else {
 						ghostInCollider.GetComponent<followPlayer>().enabled = false;
 						ghostInCollider.GetComponent<Animator>().Play("mirrorFullyCracked");
@@ -54,6 +55,15 @@ public class checkPossessedObjects : MonoBehaviour {
 				player.GetComponent<hitMirror>().addForceToMirror();
 			}
 		}
+	}
+
+	IEnumerator mirrorFlinch() {
+		Vector3 direction = (ghostInCollider.transform.position - transform.position).normalized;
+		for (int i = 0; i < 10; i++) {
+			yield return null;
+			ghostInCollider.transform.position += 3f*direction*Time.deltaTime;
+		}
+		
 	}
 
 	void checkAllGhostsDead() {
