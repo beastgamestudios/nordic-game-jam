@@ -17,6 +17,7 @@ public class displayText : MonoBehaviour {
 		currentLine = 1;
 		totalLines = lines.Length;
 		GetComponent<Text>().text = lines[currentLine - 1];
+		player = GameObject.FindGameObjectWithTag("Player");
 		player.GetComponent<PlayerControl>().control = false;
 		ghost = GameObject.FindGameObjectWithTag("ghost");
 //		playSound();
