@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class spawnFamilyMember : MonoBehaviour {
-	public Transform familyMember;
+	[HideInInspector]public Transform familyMember;
 	// Use this for initialization
 	void Start () {
 		StartCoroutine(endAnimation());
