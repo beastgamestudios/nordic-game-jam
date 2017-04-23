@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class spawnFamilyMember : MonoBehaviour {
-	
+	public Transform familyMember;
 	// Use this for initialization
 	void Start () {
 		StartCoroutine(endAnimation());
@@ -25,6 +25,8 @@ public class spawnFamilyMember : MonoBehaviour {
         	}
      	}
 		yield return new WaitForSeconds(animationLength);
-		Debug.Log("spawn family member");
+		Transform family = Instantiate(familyMember);
+		family.transform.position = transform.position;
+		gameObject.SetActive(false);
 	}
 }
