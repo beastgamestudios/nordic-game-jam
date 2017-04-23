@@ -22,7 +22,7 @@ public class PlayerControl : MonoBehaviour {
 	[HideInInspector]public string[][] allAnimations;
 	[HideInInspector]public string[] currentDirectionAnimations;
 	private bool coroutineStarted;
-
+	[HideInInspector]public bool dead;
 	private enum directions{UP, RIGHT, DOWN, LEFT};
 	private enum states{IDLE, WALK, IDLE_HOLD, WALK_HOLD, ATTACK, HURT};
 
@@ -208,10 +208,12 @@ void OnTriggerEnter2D(Collider2D other) {
 }
 
 public void hurtPlayerAnim() {
+	if (!dead) {
 		control = false;
 		playerAnimator.Play(currentDirectionAnimations[(int)states.HURT]);
 		animationPlaying = currentDirectionAnimations[(int)states.HURT];
 		StartCoroutine(endAnimation());
+	}
 }
 
 void OnTriggerStay2D(Collider2D other) {

@@ -8,9 +8,10 @@ public class PlayerHealth : MonoBehaviour {
 	public int playerHealth;
 	public GameObject healthImage;
 	private Image[] hearts;
-	public bool reduceHealth;
+	[HideInInspector]public bool reduceHealth;
 	public float timeTakenHeartLoss = 1f;
 	private float timeSinceHeartLoss;
+	public Transform gameOverUI;
 	
 	void Start() {
 		hearts = healthImage.GetComponentsInChildren<Image>();
@@ -45,7 +46,19 @@ public class PlayerHealth : MonoBehaviour {
 					heart.gameObject.SetActive(false);
 				}
 			}
+			if (playerHealth == 0) {
+				StopAllCoroutines();
+				GetComponent<PlayerControl>().control = false;
+				GetComponent<PlayerControl>().dead = true;
+				GetComponent<Animator>().Play("dead");
+				StartCoroutine(displayGameOver());
+			}
 		}
+	
+	IEnumerator displayGameOver() {
+		yield return new WaitForSeconds(0.2f);
+		Instantiate(gameOverUI);
+	}
 
 	// void OnTriggerEnter2D(Collider2D collider)
 	// {
