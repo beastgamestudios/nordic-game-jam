@@ -5,6 +5,7 @@ using UnityEngine;
 public class detectObject : MonoBehaviour {
 	public Transform objectPrefab;
 	private string objectTag;
+	public AudioSource possessSound;
 
 	// Use this for initialization
 	void Start () {
@@ -14,6 +15,7 @@ public class detectObject : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == objectTag) {
 			if (other.GetComponent<throwObject>().isPossessable) {
+				possessSound.Play();
 				other.GetComponent<Animator>().Play("turnPossessed");
 //				Instantiate(possessedObjectPrefab);
 				gameObject.SetActive(false);
@@ -35,6 +37,7 @@ public class detectObject : MonoBehaviour {
 	}
 
 	public void possessObject(Collider2D other, GameObject player) {
+		possessSound.Play();
 		other.GetComponent<Animator>().Play("turnPossessed");
 //		Instantiate(possessedObjectPrefab);
 		gameObject.SetActive(false);
