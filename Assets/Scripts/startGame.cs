@@ -13,7 +13,11 @@ public class startGame : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetButtonDown("Start")) {
-			SceneManager.LoadScene("Opening");
+			dontDestroy bgMusic = (dontDestroy)FindObjectOfType(typeof(dontDestroy));
+			if (bgMusic != null) {
+				Destroy(bgMusic.gameObject);
+			}
+			SceneManager.LoadScene("title");
 		}
 	}
 }
