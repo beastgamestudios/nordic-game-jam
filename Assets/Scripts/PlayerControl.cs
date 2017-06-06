@@ -27,6 +27,7 @@ public class PlayerControl : MonoBehaviour {
 	public AudioSource slashSound;
 	public AudioSource hurtSound;
 	public AudioSource triggerSound;
+	private bool intoDarkRealm = false;
 	void Awake() {
 		control = true;
 		
@@ -91,12 +92,6 @@ public class PlayerControl : MonoBehaviour {
 		
 		if (Input.GetButtonDown("X button")) {
 			SwitchWorlds();
-			if (isHolding) {
-				objectToBeLifted.transform.parent = null;
-				objectToBeLifted.GetComponent<throwObject>().addThrowForce((int)directions.DOWN);
-				isHolding = false;
-				playIdleAnim();
-			}
 		}
 		
 	}
@@ -105,12 +100,19 @@ public class PlayerControl : MonoBehaviour {
 		DarkRealmCoolDown();
 		foreach (GameObject ghost in Ghosts) {
 			ghost.GetComponent<SpriteRenderer>().enabled = true;
+			ghost.GetComponent<FadeImageOut>().recolor();
+			StopCoroutine(ghost.GetComponent<FadeImageOut>().fadeOut(2f));
+
 		}
 	}
 	if (!inDarkRealm) {
 		DarkRealmRecharge();
 		foreach (GameObject ghost in Ghosts) {
-			ghost.GetComponent<SpriteRenderer>().enabled = false;
+			if (intoDarkRealm) {
+//				ghost.GetComponent<SpriteRenderer>().enabled = false;
+				StartCoroutine(ghost.GetComponent<FadeImageOut>().fadeOut(2f));
+
+			}
 		}
 	}
 
