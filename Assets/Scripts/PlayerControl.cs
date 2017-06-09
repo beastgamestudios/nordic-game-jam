@@ -100,8 +100,8 @@ public class PlayerControl : MonoBehaviour {
 		DarkRealmCoolDown();
 		foreach (GameObject ghost in Ghosts) {
 			ghost.GetComponent<SpriteRenderer>().enabled = true;
-			ghost.GetComponent<FadeImageOut>().recolor();
-			StopCoroutine(ghost.GetComponent<FadeImageOut>().fadeOut(2f));
+//			ghost.GetComponent<FadeImageOut>().recolor();
+//			StopCoroutine(ghost.GetComponent<FadeImageOut>().fadeOut(2f));
 
 		}
 	}
@@ -109,8 +109,8 @@ public class PlayerControl : MonoBehaviour {
 		DarkRealmRecharge();
 		foreach (GameObject ghost in Ghosts) {
 			if (intoDarkRealm) {
-//				ghost.GetComponent<SpriteRenderer>().enabled = false;
-				StartCoroutine(ghost.GetComponent<FadeImageOut>().fadeOut(2f));
+				ghost.GetComponent<SpriteRenderer>().enabled = false;
+//				StartCoroutine(ghost.GetComponent<FadeImageOut>().fadeOut(2f));
 
 			}
 		}
