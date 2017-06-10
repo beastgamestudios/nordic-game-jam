@@ -202,6 +202,9 @@ void setObjectToPlayer() {
 	objectToBeLifted = objectColliderBoxPlayerIsIn.transform.parent;
 	objectToBeLifted.SetParent(transform);
 	objectToBeLifted.localPosition = new Vector2(0, objectHeightAbovePlayer);
+	objectToBeLifted.GetComponent<Rigidbody2D>().isKinematic = true;
+	objectToBeLifted.GetComponent<throwObject>().isPossessable = false;
+	Debug.Log(objectToBeLifted.GetComponent<throwObject>().isPossessable);
 }
 
 void OnTriggerEnter2D(Collider2D other) {

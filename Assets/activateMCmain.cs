@@ -7,7 +7,8 @@ public class activateMCmain : MonoBehaviour {
 	public GameObject DRHint;
 
 	void OnEnable() {
-		DRHint.gameObject.SetActive(false);
+		if (DRHint != null)
+			DRHint.gameObject.SetActive(false);
 	}
 	void OnDisable() {
 		MCmainText.SetActive(true);
