@@ -4,19 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class FadeImageOut : MonoBehaviour {
-	private Color initialColorImage;
-	private Color initialColorText;
-	private Color fadedColorImage;
-	private Color fadedColorText;
+	public Color initialColorImage;
+	public Color initialColorText;
+	public Color fadedColorImage;
+	public Color fadedColorText;
 	public float fadeTime;
 	public float showTime;
 	public float nonShowTime;
 
 	void OnEnable() {
-		initialColorImage = GetComponent<Image>().color;
-		initialColorText = GetComponentInChildren<Text>().color;
-		fadedColorImage = new Color(initialColorImage.r, initialColorImage.g, initialColorImage.b, 0);
-		fadedColorText = new Color(initialColorImage.r, initialColorImage.g, initialColorImage.b, 0);
 		GetComponent<Image>().color = fadedColorImage;
 		GetComponentInChildren<Text>().color = fadedColorText;
 		StartCoroutine(incrementNonShowTime());

@@ -109,11 +109,9 @@ public class PlayerControl : MonoBehaviour {
 	if (!inDarkRealm) {
 		DarkRealmRecharge();
 		foreach (GameObject ghost in Ghosts) {
-			if (intoDarkRealm) {
 				ghost.GetComponent<SpriteRenderer>().enabled = false;
 //				StartCoroutine(ghost.GetComponent<FadeImageOut>().fadeOut(2f));
 
-			}
 		}
 	}
 
