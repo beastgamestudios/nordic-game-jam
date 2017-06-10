@@ -11,6 +11,7 @@ public class displayText : MonoBehaviour {
 	private int totalLines;
 	public bool automaticPossession;
 	private GameObject ghost;
+//	public Image DRHint;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,8 @@ public class displayText : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag("Player");
 		player.GetComponent<PlayerControl>().control = false;
 		ghost = GameObject.FindGameObjectWithTag("ghost");
+		// if (DRHint != null)
+		// 	DRHint.gameObject.SetActive(false);
 //		playSound();
 	}
 	
@@ -35,6 +38,9 @@ public class displayText : MonoBehaviour {
 				currentLine = 1;
 				transform.parent.gameObject.SetActive(false);
 				player.GetComponent<PlayerControl>().control = true;
+
+				// if (DRHint != null)
+				// 	DRHint.gameObject.SetActive(true);
 				if (automaticPossession) {
 					ghost.AddComponent<moveGhostToPot>();
 					ghost.GetComponent<moveGhostToPot>().player = player;

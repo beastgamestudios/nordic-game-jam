@@ -28,6 +28,7 @@ public class PlayerControl : MonoBehaviour {
 	public AudioSource hurtSound;
 	public AudioSource triggerSound;
 	private bool intoDarkRealm = false;
+	public GameObject DRHint;
 	void Awake() {
 		control = true;
 		
@@ -100,8 +101,8 @@ public class PlayerControl : MonoBehaviour {
 		DarkRealmCoolDown();
 		foreach (GameObject ghost in Ghosts) {
 			ghost.GetComponent<SpriteRenderer>().enabled = true;
-			ghost.GetComponent<FadeImageOut>().recolor();
-			StopCoroutine(ghost.GetComponent<FadeImageOut>().fadeOut(2f));
+//			ghost.GetComponent<FadeImageOut>().recolor();
+//			StopCoroutine(ghost.GetComponent<FadeImageOut>().fadeOut(2f));
 
 		}
 	}
@@ -109,8 +110,8 @@ public class PlayerControl : MonoBehaviour {
 		DarkRealmRecharge();
 		foreach (GameObject ghost in Ghosts) {
 			if (intoDarkRealm) {
-//				ghost.GetComponent<SpriteRenderer>().enabled = false;
-				StartCoroutine(ghost.GetComponent<FadeImageOut>().fadeOut(2f));
+				ghost.GetComponent<SpriteRenderer>().enabled = false;
+//				StartCoroutine(ghost.GetComponent<FadeImageOut>().fadeOut(2f));
 
 			}
 		}
@@ -276,7 +277,10 @@ void SwitchWorlds() {
 		
 		inDarkRealm = true;
 		DarkRealmObject.SetActive(true);
-		Debug.Log("You are entering the Dark Realm");	
+		Debug.Log("You are entering the Dark Realm");
+
+		// if (DRHint != null)
+		// 	DRHint.GetComponent<changeHintText>().SwitchToDarkRealmHint();	
 	} else {
 		GetComponent<PlayerHealth>().reduceHealth = false;
 //		StopCoroutine(GetComponent<PlayerHealth>().CallReduceHealth());
@@ -284,6 +288,9 @@ void SwitchWorlds() {
 		inDarkRealm = false;
 		DarkRealmObject.SetActive(false);
 		Debug.Log("You are going back to Reality");
+
+		if (DRHint != null)
+		 	DRHint.gameObject.SetActive(false);	
 	}
 }
 
